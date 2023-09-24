@@ -11,9 +11,6 @@ myData.value.push(new AccordionListData(100));
 // Functions in the dataTypes can be invoked:
 myData.value[0].myFunction("Cool");
 
-onMounted(() => {
-	document.title = "Projekt: Community"
-})
 function PlayVideo() {
 	var videoPlayer = document.getElementById('VideoPlayer')
 	videoPlayer?.classList.add("show")
