@@ -317,7 +317,9 @@ export default function Fest() {
 										justifyContent='center'
 									>
 										{(
-											fest_events.guests[key] as {
+											fest_events.guests[
+												key as keyof typeof fest_events.guests
+											] as {
 												name: string
 												img?: string
 											}[]
