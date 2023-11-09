@@ -19,7 +19,7 @@ import Grid from '@mui/material/Unstable_Grid2/Grid2'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState, AppDispatch } from '@/store'
 import { toggleTheme } from '@/store/theme/themeSlice'
-import background from '@/assets/photos/Home/background.png'
+import background from '@/assets/photos/Home/Background.png'
 import { Footer } from './Footer'
 const initState: {
 	NavOpen: boolean
