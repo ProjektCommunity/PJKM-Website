@@ -1,6 +1,6 @@
 import { Box, SxProps, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2/Grid2'
-import GroupPic from '@/assets/photos/Home/group.png'
+import GroupPic from '@/assets/photos/Home/Group.png'
 
 export default (props: { sx: SxProps }) => {
 	return (
