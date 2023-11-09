@@ -1,0 +1,71 @@
+{
+  "name": "projekt-community-public-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The public website for projekt community",
+  "author": "Projekt-Community IT Team",
+  "license": "ISC",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./dist/",
+      "./node_modules",
+      "vite.config.ts.*",
+      "package-lock.json"
+    ],
+    "ext": "ts,tsx,json,js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "pjkt-website"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.3",
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
+    "axios-cookiejar-support": "^4.0.6",
+    "dotenv": "^16.1.4",
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.2",
+    "firebase": "^9.22.1",
+    "firebase-error-codes": "^1.2.2",
+    "js-cookie": "^3.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.7",
+    "react-router-dom": "^6.17.0",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "tough-cookie": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/js-cookie": "^3.0.3",
+    "@types/node": "^20.2.5",
+    "@types/react": "^18.0.37",
+    "@types/react-dom": "^18.0.11",
+    "@types/tough-cookie": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9",
+    "vite-plugin-mkcert": "^1.15.0"
+  }
+}
