@@ -36,7 +36,7 @@ os.execCommand('npm i && npm run build', () => {
 
 	app.listen(port, host, async () => {
 		if (host != "localhost")
-			console.log(`Listening at https://${process.env.VITE_BRANCH == 'development' ? 'www' : 'www_beta'}.projektcommunity.com | (${host}:${port})`)
+			console.log(`Listening at https://${process.env.VITE_BRANCH == 'DEVELOPMENT' ? 'www_beta' : 'www'}.projektcommunity.com | (${host}:${port})`)
 		else
 			console.log(`Listening at http://${host}:${port}`)
 	})
