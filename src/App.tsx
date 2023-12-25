@@ -28,6 +28,7 @@ function App(props: { publicRoutes: RouteObject[] }) {
 	// function buildRoutes(pubRoutes: RouteObject[]) {
 	// 	let routes: RouteObject[] = [...pubRoutes]
 	let redirect: JSX.Element = <Navigate to={'/'} />
+	
 
 	// 	if ()
 	// }

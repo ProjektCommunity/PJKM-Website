@@ -5,6 +5,7 @@ import PJKTLarge from '../../assets/PJKT-01.png'
 import { useTheme } from '@mui/material'
 import HeroImage from '@/assets/photos/Home/Hero 2.png'
 import { Link } from 'react-router-dom'
+import HeroImg from '@/assets/photos/Home/Hero 2.png'
 
 export default function Hero(props: { children?: () => JSX.Element }) {
 	const { children: Children } = props
@@ -50,7 +51,12 @@ export default function Hero(props: { children?: () => JSX.Element }) {
 
 	return (
 		<>
-			<Box className='hero'>
+			<Box
+				className='hero'
+				sx={{
+					backgroundImage: `url(${HeroImg})`,
+				}}
+			>
 				<Box // Hero Text
 					sx={{
 						height: '100%',
@@ -71,8 +77,16 @@ export default function Hero(props: { children?: () => JSX.Element }) {
 						href='https://discord.gg/PJKT'
 						target='_blank'
 					>
-						<Button variant='contained' color='warning'>
-							<Typography variant='h3' fontFamily='Nerdfont'>Join the Crew</Typography>
+						<Button
+							variant='contained'
+							color='warning'
+						>
+							<Typography
+								variant='h3'
+								fontFamily='Nerdfont'
+							>
+								Join the Crew
+							</Typography>
 						</Button>
 					</Box>
 				</Box>
