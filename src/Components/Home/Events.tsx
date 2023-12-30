@@ -12,8 +12,8 @@ export default (props: { sx: SxProps }) => {
 			route: string
 			image: string
 			buttonImg: string
-			start: string
-			end: string
+			start: Date
+			end: Date
 			secret?: boolean
 		}[]
 	>([])
