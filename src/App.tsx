@@ -6,7 +6,6 @@ import {
 	createBrowserRouter,
 } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
 import { darkTheme, lightTheme } from 'services/theme/theme'
 import { RootState } from 'store/index'
 import './App.css'
