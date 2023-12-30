@@ -10,6 +10,7 @@ import {
 	Typography,
 	styled,
 	Paper,
+	useTheme,
 } from '@mui/material'
 import { Menu as MenuIcon, Twitter, YouTube } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
@@ -106,6 +107,8 @@ export default function Header(props: { children: JSX.Element }) {
 		},
 	]
 
+	const theme = useTheme()
+
 	useEffect(() => {
 		if (location.pathname != state.storedRoute) {
 			dispatch({
@@ -176,14 +179,25 @@ export default function Header(props: { children: JSX.Element }) {
 								marginLeft: 'auto',
 								marginRight: 'auto',
 								height: '100%',
+								display: 'flex',
+								alignItems: 'center',
 							}}
 						>
 							<Box
 								component='img'
 								src={PJKTFull}
 								height='100%'
-								mr={5}
+								mr={1}
 							/>
+							<Typography
+								fontFamily='Norwester'
+								variant='h5'
+								color={theme.palette.primary.light}
+								lineHeight={0.9}
+								whiteSpace={'pre-wrap'}
+							>
+								Projekt:{`\n`}Community
+							</Typography>
 						</Link>
 					</Grid>
 					<Grid
