@@ -58,6 +58,10 @@ const FAQData = [
 		Q: 'What are the benefits of being a representative?',
 		A: 'Representatives have their own section in the Discord where they can post suggestions, ask questions, and give more input on the events we run. Community reps are also given a chance to get their communities involved in the making of events before we invite the public.',
 	},
+	{
+		Q: 'Are you affiliated with VRChat?',
+		A: 'No, we are not affiliated with VRChat. We are a community run organization that celebrates the creativity of the VR community.',
+	},
 ]
 
 const Accordion = styled((props: AccordionProps) => (
@@ -151,6 +155,9 @@ export default function FAQ() {
 								setExpanded(expanded === i ? null : i)
 							}}
 							expanded={expanded === i}
+							sx={{
+								borderRadius: '1em',
+							}}
 						>
 							<AccordionSummary>
 								<Typography variant='h5'>{Q}</Typography>

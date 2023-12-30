@@ -1,71 +1,32 @@
 import { Box, Button, SxProps, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2/Grid2'
-import GG from '@/assets/photos/Home/GraffitiGrab.png'
-import Fest from '@/assets/photos/Home/PJKTFEST.png'
-import Lenz from '@/assets/photos/Home/ProjektLenz.png'
-import horrorcon from '@/assets/photos/Home/ProjektHorrorCon.png'
-import PJKTCOM from '@/assets/photos/Home/PJKT-05.png'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { EventList } from '@/Components/eventList'
+import * as API from '@/utils/API'
 
 export default (props: { sx: SxProps }) => {
-	const events: {
-		name: string
-		route: string
-		image: string
-		timeStart: number
-		timeEnd: number
-		secret?: true
-	}[] = [
+	const [projects, setProjects] = useState<
 		{
-			name: 'Graffiti Grab',
-			image: GG,
-			route: '/events/graffiti_grab',
-			timeStart: new Date('April 2, 2023 12:00 AM').getTime(),
-			timeEnd: new Date('April 9, 2023 11:59 PM').getTime(),
-		},
-		{
-			name: 'FEST',
-			image: Fest,
-			route: '/events/fest',
-			timeStart: new Date('June 23, 2023 2:00 PM').getTime(),
-			timeEnd: new Date('June 25, 2023 12:00 AM').getTime(),
-		},
-		{
-			name: 'Lenz',
-			image: Lenz,
-			route: '/events/lenz',
-			timeStart: new Date('September 29, 2023 12:00 AM').getTime(),
-			timeEnd: new Date('October 1, 2023 11:59 PM').getTime(),
-		},
-		{
-			name: 'HorrorCon',
-			image: horrorcon,
-			route: '/events/horrorcon',
-			timeStart: new Date('October 28, 2023 12:00 AM').getTime(),
-			timeEnd: new Date('October 29, 2023 11:59 PM').getTime(),
-		},
-		// {
-		// 	name: '???',
-		// 	image: PJKTCOM,
-		// 	timeStart: new Date('December 1, 2023 2:00 PM').getTime(),
-		// 	timeEnd: new Date('December 3, 2023, 12:00 PM').getTime(),
-		// 	secret: true,
-		// },
-	]
+			name: string
+			route: string
+			image: string
+			buttonImg: string
+			start: string
+			end: string
+			secret?: boolean
+		}[]
+	>([])
 
-	const order = () => {
-		const now = new Date().getTime()
-		const future = events.filter((event) => event.timeStart > now)
-		const past = events.filter((event) => event.timeEnd < now)
-		const current = events.filter(
-			(event) => event.timeStart < now && event.timeEnd > now
-		)
-
-		return [...current, ...future, ...past]
-	}
-
-	const filteredOrders = order()
+	useEffect(() => {
+		const getEvents = async () => {
+			const eventList = new EventList(await API.getProjects())
+			console.log(eventList.getEventPageList())
+			setProjects(eventList.getEventPageList())
+		}
+		if (projects.length > 0) return
+		getEvents()
+	}, [projects, setProjects])
 
 	return (
 		<Box
@@ -90,7 +51,7 @@ export default (props: { sx: SxProps }) => {
 					flexGrow: 1,
 				}}
 			>
-				{filteredOrders.map((event, i) => (
+				{projects.map((event, i) => (
 					<Grid
 						md={i <= 1 ? 5 : 4}
 						key={i}
@@ -99,19 +60,25 @@ export default (props: { sx: SxProps }) => {
 						justifyContent='center'
 					>
 						<Box sx={{ aspectRatio: 1.5 }}>
-							<Link to={event.route}>
-								<Button>
-									<Box
-										component='img'
-										src={event.image}
-										width='100%'
-										sx={{
-											opacity: event.secret ? 0.5 : 1,
-											m: 'auto',
-										}}
-									/>
-								</Button>
-							</Link>
+							{event.route && (
+								<Link to={event.route}>
+									<Button>
+										<Box
+											component='img'
+											src={event.buttonImg}
+											width='100%'
+											sx={{
+												opacity: event.secret ? 0.5 : 1,
+												transition: '0.3s',
+												m: 'auto',
+												'&:hover': {
+													transform: 'scale(1.1)',
+												},
+											}}
+										/>
+									</Button>
+								</Link>
+							)}
 						</Box>
 					</Grid>
 				))}

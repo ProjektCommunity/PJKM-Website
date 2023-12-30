@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { Menu as MenuIcon, Twitter, YouTube } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { Fragment, useEffect, useReducer, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Grid from '@mui/material/Unstable_Grid2/Grid2'
 import { useSelector, useDispatch } from 'react-redux'
@@ -28,7 +28,7 @@ const initState: {
 	storedRoute: string
 } = {
 	NavOpen: false,
-	headerHeight: 8,
+	headerHeight: 4,
 	footerHeight: null,
 	storedRoute: '',
 }
@@ -114,14 +114,14 @@ export default function Header(props: { children: JSX.Element }) {
 			})
 			window.scrollTo(0, 0)
 		}
-		window.addEventListener('scroll', () => {
-			if (
-				location.pathname == '/' &&
-				((window.scrollY > 5 && state.headerHeight != 4) ||
-					(window.scrollY < 5 && state.headerHeight != 8))
-			)
-				dispatch({ type: REDUCER_ACTION_TYPE.ToggleHeight })
-		})
+		// window.addEventListener('scroll', () => {
+		// 	if (
+		// 		location.pathname == '/' &&
+		// 		((window.scrollY > 5 && state.headerHeight != 4) ||
+		// 			(window.scrollY < 5 && state.headerHeight != 8))
+		// 	)
+		// 		dispatch({ type: REDUCER_ACTION_TYPE.ToggleHeight })
+		// })
 
 		setTimeout(() => {
 			dispatch({
@@ -250,8 +250,8 @@ export default function Header(props: { children: JSX.Element }) {
 							display='flex'
 							flexDirection='column'
 						>
-							{pages.map((page) => (
-								<>
+							{pages.map((page, i) => (
+								<Fragment key={i}>
 									<Link to={page.path}>
 										<Button color='inherit'>
 											<Typography variant='h6'>
@@ -260,7 +260,7 @@ export default function Header(props: { children: JSX.Element }) {
 										</Button>
 									</Link>
 									<Divider sx={{ mb: 3 }} />
-								</>
+								</Fragment>
 							))}
 						</Box>
 					</StyledDrawer>

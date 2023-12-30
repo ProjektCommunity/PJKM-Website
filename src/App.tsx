@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 
 function App(props: { publicRoutes: RouteObject[] }) {
 	const { publicRoutes } = props
-	const state = useSelector((state: RootState) => state)
+	const themeSlice = useSelector((state: RootState) => state.themeSlice)
 	const [init, setInit] = useState(false)
 
 	useEffect(() => {
@@ -28,7 +28,6 @@ function App(props: { publicRoutes: RouteObject[] }) {
 	// function buildRoutes(pubRoutes: RouteObject[]) {
 	// 	let routes: RouteObject[] = [...pubRoutes]
 	let redirect: JSX.Element = <Navigate to={'/'} />
-	
 
 	// 	if ()
 	// }
@@ -44,9 +43,7 @@ function App(props: { publicRoutes: RouteObject[] }) {
 	])
 
 	return (
-		<ThemeProvider
-			theme={state.themeSlice.darkTheme ? darkTheme : lightTheme}
-		>
+		<ThemeProvider theme={themeSlice.darkTheme ? darkTheme : lightTheme}>
 			{/* <CssBaseline /> */}
 			<RouterProvider router={routers} />
 		</ThemeProvider>

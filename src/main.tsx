@@ -8,13 +8,7 @@ import './index.css'
 import { RouteObject } from 'react-router-dom'
 import { Header } from './Components'
 import { Home, FAQ } from './views'
-import {
-	Events,
-	GraffitiGrab,
-	Fest,
-	Lenz,
-	HorrorCon,
-} from './views/Public/Events'
+import { Events, PJKTEvent } from './views/Public/Events'
 
 function Page(PageToShow: () => JSX.Element) {
 	return (
@@ -33,22 +27,9 @@ const routes: RouteObject[] = [
 		path: '/events',
 		element: Page(Events),
 	},
-	// Events
 	{
-		path: '/events/graffiti_grab',
-		element: Page(GraffitiGrab),
-	},
-	{
-		path: '/events/fest',
-		element: Page(Fest),
-	},
-	{
-		path: '/events/lenz',
-		element: Page(Lenz),
-	},
-	{
-		path: '/events/horrorcon',
-		element: Page(HorrorCon),
+		path: '/events/:year/:project',
+		element: Page(PJKTEvent),
 	},
 	{
 		path: '/FAQ',

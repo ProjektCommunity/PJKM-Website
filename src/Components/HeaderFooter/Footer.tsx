@@ -118,50 +118,30 @@ export const Footer = (props: { ref?: React.RefObject<HTMLElement> }) => {
 						Socials
 					</Typography>
 					<Box p={2}>
-						<Link
-							to='/'
+						<IconButton
+							href='https://www.youtube.com/@PJKT'
 							target='_blank'
 						>
-							<IconButton
-								href='https://www.youtube.com/@PJKT'
-								target='_blank'
-							>
-								<YouTube fontSize='medium' />
-							</IconButton>
-						</Link>
-						<Link
-							to='/'
+							<YouTube fontSize='medium' />
+						</IconButton>
+						<IconButton
+							href='https://twitter.com/PJKT_COM'
 							target='_blank'
 						>
-							<IconButton
-								href='https://twitter.com/PJKT_COM'
-								target='_blank'
-							>
-								<Twitter fontSize='large' />
-							</IconButton>
-						</Link>
-						<Link
-							to='/'
+							<Twitter fontSize='large' />
+						</IconButton>
+						<IconButton
+							href='https://discord.gg/PJKT'
 							target='_blank'
 						>
-							<IconButton
-								href='https://discord.gg/PJKT'
-								target='_blank'
-							>
-								<FontAwesomeSVGIcon icon={faDiscord} />
-							</IconButton>
-						</Link>
-						<Link
-							to='/'
+							<FontAwesomeSVGIcon icon={faDiscord} />
+						</IconButton>
+						<IconButton
+							href='https://ko-fi.com/pjkt'
 							target='_blank'
 						>
-							<IconButton
-								href='https://ko-fi.com/pjkt'
-								target='_blank'
-							>
-								<Kofi />
-							</IconButton>
-						</Link>
+							<Kofi />
+						</IconButton>
 					</Box>
 				</Grid>
 			</Grid>
