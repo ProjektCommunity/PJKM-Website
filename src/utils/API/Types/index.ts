@@ -22,6 +22,7 @@ export interface Project {
 	buttonImg: string
 	startDate: Date
 	endDate: Date
+	description?: string
 	videoUrl?: string | string[]
 	EasterHunt?: {
 		description: string
