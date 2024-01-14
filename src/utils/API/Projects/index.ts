@@ -695,6 +695,22 @@ export async function getProjects(): Promise<API.Schedule[]> {
 						},
 					],
 				},
+				{
+					year: 2024,
+					projects: [
+						{
+							name: 'Ink',
+							image: '',
+							buttonImg: '',
+							route: '',
+							startDate: new Date('2024, 02, 23, 12:00 AM'),
+							endDate: new Date('2024, 02, 25, 11:59 PM'),
+							// events: [],
+							description:
+								'Projekt: Ink is a developer conference hosted in virtual reality focused on the future of VR. Developers and creators from around the industry give presentations on new technologies and techniques for the unique challenges of developing VR applications. The Projekt: Ink venue itself is virtual, providing an environment that showcases the power and creativity of VR.',
+						},
+					],
+				},
 			])
 		})
 	})

@@ -358,6 +358,17 @@ function Initialized(props: {
 						/>
 					)}
 
+					{state.eventList.loaded.project.description && (
+						<Typography
+							variant='h5'
+							textAlign='center'
+							fontFamily='Norwester'
+							mb={2}
+						>
+							{state.eventList.loaded.project.description}
+						</Typography>
+					)}
+
 					{state.eventList.loaded.project && (
 						<EventPage
 							state={state}
