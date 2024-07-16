@@ -1,97 +1,67 @@
-import { Box, Button, Divider, Paper, Theme, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
-import photos from '../../assets/photos/slider.json'
+import { Box, Button } from '@mui/material'
 import PJKTLarge from '../../assets/PJKT-01.png'
-import { useTheme } from '@mui/material'
-import HeroImage from '@/assets/photos/Home/Hero 2.png'
-import { Link } from 'react-router-dom'
-import HeroImg from '@/assets/photos/Home/Hero 2.png'
+import HeroImg from '@/assets/TransparencyGrid.svg'
 
-export default function Hero(props: { children?: () => JSX.Element }) {
-	const { children: Children } = props
-
-	const isElementXPercentInViewport = function (
-		el: HTMLElement,
-		percentVisible: number
-	) {
-		let rect = el.getBoundingClientRect(),
-			windowHeight =
-				window.innerHeight || document.documentElement.clientHeight
-
-		return !(
-			Math.floor(
-				100 - ((rect.top >= 0 ? 0 : rect.top) / +-rect.height) * 100
-			) < percentVisible ||
-			Math.floor(
-				100 - ((rect.bottom - windowHeight) / rect.height) * 100
-			) < percentVisible
-		)
-	}
-
-	const parallax = () => {
-		const hero = document.querySelector('.hero') as HTMLElement
-		window.addEventListener('scroll', () => {
-			if (isElementXPercentInViewport(hero, 1)) {
-				const scrollPercentage =
-					(window.scrollY / window.innerHeight) * 100
-				const newHeight = 100 - scrollPercentage
-				const clampedHeight = Math.max(0, Math.min(100, newHeight))
-				// console.log(clampedHeight)
-				hero.style.height = `${clampedHeight}vh`
-			} else {
-				hero.style.height = `50vh`
-			}
-		})
-	}
-	useEffect(() => {
-		setTimeout(() => {
-			parallax()
-		}, 1000)
-	})
-
+export default function Hero() {
 	return (
 		<>
 			<Box
 				className='hero'
+				position='relative'
 				sx={{
 					backgroundImage: `url(${HeroImg})`,
+					backgroundSize: 'fill',
+					backgroundRepeat: 'no-repeat',
+					backgroundPosition: 'center',
+					px: { lg: 55, md: 50, },
+					py: 10,
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+					gap: 'auto',
+					height: '100%',
 				}}
 			>
-				<Box // Hero Text
+				<Box
+					position='absolute'
+					top={0}
+					left={0}
+					width='100%'
+					height='100%'
 					sx={{
-						height: '100%',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						alignItems: 'center',
+						opacity: 0.75,
+						background:
+							'linear-gradient(45deg, rgba(164,0,255,1) 0%, rgba(0,198,255,1) 100%)',
+					}}
+				/>
+				<Box
+					zIndex={1}
+					width='100%'
+					height='260px'
+					maxWidth='348px'
+					sx={{
+						backgroundImage: `url(${PJKTLarge})`,
+						backgroundSize: 'contain',
+						backgroundRepeat: 'no-repeat',
+						backgroundPosition: 'center',
+						filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+					}}
+				/>
+				<Button
+					variant='contained'
+					onClick={({ currentTarget: { disabled } }) => {
+						if (!disabled) {
+							window.open('https://discord.gg/PJKT')
+						}
+					}}
+					sx={{
+						filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
 					}}
 				>
-					<Box
-						component='img'
-						src={PJKTLarge}
-						width='80%'
-						maxWidth={'40em'}
-					/>
-					<Box
-						component='a'
-						href='https://discord.gg/PJKT'
-						target='_blank'
-					>
-						<Button
-							variant='contained'
-							color='warning'
-						>
-							<Typography
-								variant='h3'
-								fontFamily='Nerdfont'
-							>
-								Join the Crew
-							</Typography>
-						</Button>
-					</Box>
-				</Box>
+					Join the Crew
+				</Button>
 			</Box>
-			<Box className='section 1'>{Children && <Children />}</Box>
 		</>
 	)
 }

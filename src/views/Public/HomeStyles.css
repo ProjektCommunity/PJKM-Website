@@ -1,7 +1,5 @@
 .hero {
-	height: 100vh;
+	height: 400px;
 	background-size: cover;
 	background-position: center;
-	overflow: hidden;
-	transition: height 0.1s;
 }

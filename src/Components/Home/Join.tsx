@@ -1,12 +1,12 @@
 import {
 	Box,
 	Button,
+	Grid,
 	IconButton,
 	SxProps,
 	Typography,
 	useTheme,
 } from '@mui/material'
-import Grid from '@mui/material/Unstable_Grid2/Grid2'
 import GerzyJamez from '@/assets/photos/Home/Gerzy_and_Jamez.png'
 import VRChat from '@/assets/photos/Home/Experience in VRChat_White.png'
 import { FontAwesomeSVGIcon, Pico, Viveport } from '..'
@@ -22,7 +22,6 @@ export default (props: { sx: SxProps }) => {
 		name: string
 		url: string
 		icon: any
-		disabled?: true
 	}[] = [
 		{
 			name: 'Steam',
@@ -40,178 +39,146 @@ export default (props: { sx: SxProps }) => {
 			icon: Viveport,
 		},
 		{
-			name: 'Android [Alpha]',
-			url: 'https://play.google.com/store/apps/details?id=com.vrchat.mobile.playstore&hl=en_US&gl=US&pli=1',
+			name: 'Android [Beta]',
+			url: 'https://play.google.com/store/apps/details?id=com.vrchat.mobile.playstore&hl=en_US',
 			icon: faAndroid,
 		},
 		{
 			name: 'Pico',
-			url: 'https://steampowered.com',
+			url: 'https://store-global.picoxr.com/global/detail/1/7288745304105664518',
 			icon: Pico,
-			disabled: true,
 		},
 	]
 
 	const theme = useTheme()
 
-	const bodyFontSize = {
-		xs: '1rem',
-		sm: '1.5rem',
-		md: '2rem',
-		lg: '1.75rem',
-		xl: '1.75rem',
-	}
-
-	const strongFontSize = {
-		xs: '1.25rem',
-		sm: '1.75rem',
-		md: '2.8rem',
-		lg: '2rem',
-		xl: '2rem',
-	}
 	return (
-		<Box sx={{ ...props.sx }}>
-			<Typography
-				variant='h2'
-				fontFamily={'Norwester'}
-				align='center'
-				mb={5}
-			>
-				How can I join?
-			</Typography>
-			<Grid
-				container
-				alignItems='center'
-				direction='row-reverse'
-				sx={{
-					flexGrow: 1,
-					minHeight: '12em',
-				}}
-			>
+		<Box
+			sx={{
+				...props.sx,
+				display: 'flex',
+				flexDirection: 'column',
+				justifyContent: 'center',
+				alignItems: 'center',
+				gap: 4,
+			}}
+		>
+			<Grid container spacing={2}>
 				<Grid
-					xl={6}
-					lg={12}
-					p={4}
-				>
-					<Box
-						component='img'
-						src={GerzyJamez}
-						sx={{ transform: 'scaleX(-1)' }}
-						maxHeight='100%'
-						maxWidth={'100%'}
-					/>
-				</Grid>
-				<Grid
-					xl={6}
-					lg={12}
-					sx={{ p: 4 }}
-					display='flex'
-					flexDirection='column'
-					justifyContent='center'
-					alignItems={'center'}
+					xs={12}
+					lg={6}
+					item
+					sx={{
+						display: 'flex',
+					}}
 				>
 					<Box
 						component='img'
 						src={VRChat}
-						maxWidth='100%'
+						alt='Experience in VRChat'
+						sx={{
+							width: '100%',
+							height: '100%',
+							cursor: 'pointer',
+						}}
+						onClick={() => {
+							window.open('https://hello.vrchat.com/')
+						}}
 					/>
-
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					lg={6}
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
 					<Typography
-						variant={'body2'}
-						fontFamily='NerdFont'
-						align='center'
-						maxWidth='20em'
-						fontWeight='bold'
-						fontSize={bodyFontSize}
-						sx={{ mb: 4 }}
+						textAlign='right'
+						variant='h2'
+						sx={{
+							fontWeight: 'bold',
+							textDecoration: 'underline',
+							textAlign: { xs: 'center', lg: 'right' },
+							width: '100%',
+						}}
 					>
-						VRChat lets you fully embody custom avatars, play social
-						games, and connect with friends in new ways. VRChat
-						hosts a massive global community of gamers, musicians,
-						creators, artists, entertainers and more.
+						HOW CAN I JOIN?
 					</Typography>
 					<Typography
-						variant={'h4'}
-						fontFamily='NerdFont'
-						align='center'
-						maxWidth='20em'
-						fontWeight='bold'
-						fontSize={strongFontSize}
-						sx={{ mb: 4 }}
+						sx={{
+							width: '100%',
+							textAlign: { xs: 'center', lg: 'right' },
+						}}
 					>
-						No VR Headset Required
+						<span>VRChat</span> lets you fully embody custom
+						avatars, play social games, and connect with friends in
+						new ways. VRChat hosts a massive global community of
+						gamers, musicians, creators, artists, entertainers and
+						more
 					</Typography>
 					<Typography
-						variant={'body2'}
-						fontFamily='NerdFont'
-						align='center'
-						maxWidth='20em'
-						fontWeight='bold'
-						fontSize={bodyFontSize}
-						sx={{ mb: 4 }}
+						variant='h3'
+						sx={{
+							width: '100%',
+							textAlign: { xs: 'center', lg: 'right' },
+						}}
 					>
-						VRChat offers several ways to play.
-					</Typography>
-					<Grid
-						container
-						mb={5}
-						spacing={5}
-						justifyContent='center'
-					>
-						{downloadLinks.map((link, i) => {
-							const Icon = link.icon
-							return (
-								<Grid key={i}>
-									<IconButton
-										href={link.url}
-										target='_blank'
-										sx={{
-											backgroundColor:
-												theme.palette.info.dark,
-											minWidth: '5em',
-										}}
-										disabled={link.disabled}
-									>
-										{(isFontAwesome(Icon) && (
-											<Box mr={2}>
-												<FontAwesomeSVGIcon
-													icon={Icon}
-												/>
-											</Box>
-										)) || (
-											<Box mr={2}>
-												<Icon />
-											</Box>
-										)}
-										<Box
-											sx={{
-												display: 'flex',
-												flexDirection: 'column',
-												justifyContent: 'center',
-												alignItems: 'start',
-											}}
-										>
-											<Typography>Download on</Typography>
-											<Typography>{link.name}</Typography>
-										</Box>
-									</IconButton>
-								</Grid>
-							)
-						})}
-					</Grid>
-					<Typography
-						variant={'body2'}
-						fontFamily='NerdFont'
-						align='center'
-						maxWidth='20em'
-						fontWeight='bold'
-						fontSize={bodyFontSize}
-						sx={{ mb: 4 }}
-					>
-						VRChat is Cross-Platform: Oculus Quest, Oculus Rift,
-						SteamVR, and Viveport.
+						* VR Not Required
 					</Typography>
 				</Grid>
+			</Grid>
+			<Grid
+				container
+				spacing={4}
+				pb={2}
+			>
+				{downloadLinks.map((link) => {
+					const Icon = link.icon
+					return (
+						<Grid
+							item
+							key={link.name}
+							xs={12}
+							md={6}
+							lg={4}
+							xl={12 / downloadLinks.length}
+						>
+							<Button
+								href={link.url}
+								target='_blank'
+								fullWidth
+								sx={{
+									backgroundColor:
+										theme.palette.accentLight.main,
+									minWidth: '5em',
+									color: theme.palette.accentLight
+										.contrastText,
+								}}
+								startIcon={
+									isFontAwesome(Icon) ? (
+										<FontAwesomeSVGIcon icon={Icon} />
+									) : (
+										<Icon />
+									)
+								}
+							>
+								<Typography
+									variant='caption'
+									color={
+										theme.palette.accentLight.contrastText
+									}
+								>
+									{link.name}
+								</Typography>
+							</Button>
+						</Grid>
+					)
+				})}
 			</Grid>
 		</Box>
 	)

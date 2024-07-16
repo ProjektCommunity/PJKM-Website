@@ -1,3 +1,3 @@
-import { FontAwesomeSVGIcon, Kofi, Pico, Viveport } from './Icons'
+import { FontAwesomeSVGIcon, Kofi, Pico, Viveport, Vrc } from './Icons'
 
-export { FontAwesomeSVGIcon, Kofi, Pico, Viveport }
+export { FontAwesomeSVGIcon, Kofi, Pico, Viveport, Vrc }
