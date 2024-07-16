@@ -1,18 +1,16 @@
 import {
 	Box,
-	Button,
 	SxProps,
 	Typography,
 	Grid,
 	useTheme,
 	IconButton,
 } from '@mui/material'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 import { EventList } from '@/Components/eventList'
 import * as API from '@/utils/API'
 import {
-	ArrowBack,
 	ArrowForward,
 	ArrowLeft,
 	ArrowRight,
@@ -231,6 +229,7 @@ export default (props: { sx: SxProps }) => {
 						>
 							{projects.get().map((project, i) => (
 								<Box
+									key={i}
 									width='304px'
 									minWidth='304px'
 									maxWidth='304px'

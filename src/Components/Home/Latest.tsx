@@ -6,7 +6,6 @@ import {
 	useTheme,
 	Grid,
 	Card,
-	CardMedia,
 	TextField,
 	Button,
 	styled,
@@ -47,7 +46,6 @@ export default function Latest(props: { sx: SxProps }) {
 	>(null)
 
 	const theme = useTheme()
-	const navigate = useNavigate()
 
 	const formatter = new Intl.DateTimeFormat('en', {
 		month: 'numeric',
@@ -57,7 +55,7 @@ export default function Latest(props: { sx: SxProps }) {
 
 	// Fetch latest announcement
 	async function FetchLatest() {
-		let fakeTakes = [
+		const fakeTakes = [
 			{
 				name: 'Fest',
 				color: `#FC00AD`,

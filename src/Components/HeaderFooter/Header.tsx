@@ -9,7 +9,6 @@ import {
 	IconButton,
 	Typography,
 	styled,
-	Paper,
 	useTheme,
 } from '@mui/material'
 import { Close, Menu as MenuIcon } from '@mui/icons-material'

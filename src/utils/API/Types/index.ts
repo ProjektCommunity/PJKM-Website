@@ -22,7 +22,7 @@ export interface Project {
 	end_date: Date
 	accepting_booth: boolean
 	accepting_events: boolean
-	booth_requirements: Object
+	booth_requirements: object
 	booth_deadline_date: Date
 	events_deadline_date: Date
 	preview_link: string | null

@@ -1,6 +1,5 @@
-import { Box, Divider, SxProps, Typography, useTheme } from '@mui/material'
+import { Box, SxProps, useTheme } from '@mui/material'
 import * as Components from '@/Components'
-import Grid from '@mui/material/Unstable_Grid2/Grid2'
 import './HomeStyles.css'
 import { useEffect, useState } from 'react'
 

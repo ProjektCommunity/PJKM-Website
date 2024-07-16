@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography, Grid } from '@mui/material'
+import { Box, Typography, Grid } from '@mui/material'
 import { Twitter, YouTube } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
 import { Link } from 'react-router-dom'
@@ -7,7 +7,7 @@ import { FontAwesomeSVGIcon, Kofi, Vrc } from '..'
 import React, { useEffect, useState } from 'react'
 import theme from '@/services/theme/theme'
 
-export const Footer = (props: { ref?: React.RefObject<HTMLElement> }) => {
+export const Footer = () => {
 	const [paddingWidth, setPaddingWidth] = useState(55)
 
 	const checkPaddingWidth = () => {

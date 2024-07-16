@@ -2,12 +2,10 @@ import {
 	Box,
 	Button,
 	Grid,
-	IconButton,
 	SxProps,
 	Typography,
 	useTheme,
 } from '@mui/material'
-import GerzyJamez from '@/assets/photos/Home/Gerzy_and_Jamez.png'
 import VRChat from '@/assets/photos/Home/Experience in VRChat_White.png'
 import { FontAwesomeSVGIcon, Pico, Viveport } from '..'
 import { faSteam, faMeta, faAndroid } from '@fortawesome/free-brands-svg-icons'
