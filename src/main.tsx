@@ -7,8 +7,7 @@ import store from 'store/index'
 import './index.css'
 import { RouteObject } from 'react-router-dom'
 import { Header } from './Components'
-import { Home, FAQ } from './views'
-import { Events, PJKTEvent } from './views/Public/Events'
+import { Home } from './views'
 
 function Page(PageToShow: () => JSX.Element) {
 	return (
@@ -22,18 +21,6 @@ const routes: RouteObject[] = [
 	{
 		path: '/',
 		element: Page(Home),
-	},
-	{
-		path: '/events',
-		element: Page(Events),
-	},
-	{
-		path: '/events/:year/:project',
-		element: Page(PJKTEvent),
-	},
-	{
-		path: '/FAQ',
-		element: Page(FAQ),
 	},
 ]
 

@@ -9,7 +9,6 @@ import {
 	IconButton,
 	Typography,
 	styled,
-	Paper,
 	useTheme,
 } from '@mui/material'
 import { Menu as MenuIcon, Twitter, YouTube } from '@mui/icons-material'

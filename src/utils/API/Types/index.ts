@@ -16,37 +16,53 @@ export interface event {
 }
 
 export interface Project {
+	id: number
 	name: string
-	route: string
-	image: string
-	buttonImg: string
-	startDate: Date
-	endDate: Date
-	description?: string
-	videoUrl?: string | string[]
-	EasterHunt?: {
-		description: string
-		worlds: { name: string; link: string, image?: string }[]
-		collaborations?: { name: string; link: string }[]
-		raffle?: {
-			description: string
-			raffleLink: string
-			winners?: string[]
-		}
-	}
-	FilmFestival?: {
-		description: string
-		submissions?: {
-			name: string
-			link: string
-			thumbnail: string
-		}[]
-	}
-	events?: event[]
-	secret?: true
+	start_date: Date
+	end_date: Date
+	accepting_booth: boolean
+	accepting_events: boolean
+	booth_requirements: object
+	booth_deadline_date: Date
+	events_deadline_date: Date
+	preview_link: string | null
+	public: boolean
+	createdAt: Date
+	updatedAt: Date
+	deletedAt: Date | null
+
+	logo_id: number | null
+	Logo?: File
+	group_photo_id: number | null
+	GroupPhoto?: File
+	poster_id: number | null
+	Poster?: File
+	tag_id: number | null
+	ProjectTag?: Tag
+	venue_id: number | null
+	Venue?: Venue
 }
 
-export interface Schedule {
-	year: number
-	projects: Project[]
+export interface File {
+	id: number
+	name?: string
+	path?: string
+}
+
+export interface Tag {
+	id: number
+	name: string
+	color: string
+}
+
+export interface Venue {
+	id: number
+	name: string
+	url: string
+	world_id: string
+	orgOwned: boolean
+	createdAt: Date
+	updatedAt: Date
+	deletedAt: Date | null
+	community_id: number
 }
