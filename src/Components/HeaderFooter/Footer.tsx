@@ -1,276 +1,150 @@
-import { Box, IconButton, Typography, Grid } from '@mui/material'
+import { Box, IconButton, Typography } from '@mui/material'
 import { Twitter, YouTube } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
 import { Link } from 'react-router-dom'
+import Grid from '@mui/material/Unstable_Grid2/Grid2'
 import { faDiscord } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeSVGIcon, Kofi, Vrc } from '..'
-import React, { useEffect, useState } from 'react'
-import theme from '@/services/theme/theme'
+import { Kofi, FontAwesomeSVGIcon } from '..'
+import React from 'react'
 
 export const Footer = (props: { ref?: React.RefObject<HTMLElement> }) => {
-	const [paddingWidth, setPaddingWidth] = useState(55)
-
-	const checkPaddingWidth = () => {
-		if (window.innerWidth > 1440) {
-			setPaddingWidth((window.innerWidth - 1000) / 8)
-			console.log((window.innerWidth - 1000) / 8)
-		} else {
-			console.log('55px')
-			return setPaddingWidth(55)
-		}
-	}
-
-	useEffect(() => {
-		checkPaddingWidth()
-		window.addEventListener('resize', checkPaddingWidth)
-		return () => window.removeEventListener('resize', checkPaddingWidth)
-	}, [])
-
 	return (
-		<Grid
-			container
-			gap={0}
-			spacing={4}
-			sx={{
-				px: {
-					xl: paddingWidth,
-					lg: 30,
-					md: 20,
-					xs: 10,
-				},
-				py: 6,
-				backgroundColor: theme.palette.accentDark.main,
-				color: theme.palette.accentDark.contrastText,
-			}}
+		<Box
+			p={4}
+			className='footer'
 		>
 			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
+				container
+				sx={{ height: '100%', width: '100%' }}
 			>
-				<Box
-					sx={{
-						backgroundImage: `url(${PJKTFull})`,
-						backgroundSize: 'contain',
-						backgroundRepeat: 'no-repeat',
-						backgroundPosition: 'center',
-						width: '100%',
-						height: '100%',
-						minHeight: '150px',
-						maxWidth: '150px',
-						mx: 'auto',
-					}}
-				/>
-			</Grid>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
-				sx={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-				}}
-			>
-				<Box>
+				<Grid // Logo
+					md={3}
+					display='flex'
+					justifyContent='center'
+					alignItems='center'
+				>
+					<Box
+						component='img'
+						src={PJKTFull}
+						width={'50%'}
+					/>
+				</Grid>
+				<Grid // Contact Info
+					md={3}
+					display='flex'
+					flexDirection='column'
+				>
 					<Typography
-						variant='h6'
-						sx={{ textDecoration: 'underline' }}
+						variant='h3'
+						fontFamily={'Norwester'}
 					>
-						Contact Us
+						Contact
 					</Typography>
+					<Box
+						flexGrow={0.5}
+						display='flex'
+						flexDirection='column'
+						justifyContent='space-evenly'
+					>
+						<Box>
+							<Typography
+								variant='h6'
+								fontWeight='bold'
+							>
+								Business
+							</Typography>
+							<Typography>
+								<Box
+									component='a'
+									target='_blank'
+									href='mailto:business@projektcommunity.com'
+								>
+									business@projektcommunity.com
+								</Box>
+							</Typography>
+						</Box>
+
+						<Box>
+							<Typography
+								variant='h6'
+								fontWeight='bold'
+							>
+								Support
+							</Typography>
+							<Typography>
+								<Box
+									component='a'
+									target='_blank'
+									href='mailto:support@projektcommunity.com'
+								>
+									support@projektcommunity.com
+								</Box>
+							</Typography>
+						</Box>
+					</Box>
+				</Grid>
+				<Grid md={3}>
+					{' '}
+					{/* Quick Links */}
 					<Typography
-						variant='h6'
-						sx={{ textDecoration: 'underline' }}
-					>
-						Business
-					</Typography>
-					<Link
-						to='mailto:business@projektcommunity.com'
-						target='_blank'
-					>
-						<Typography
-							variant='caption'
-							sx={{
-								'&:hover': {
-									color: theme.palette.tertiary.main,
-									textDecoration: 'underline',
-									WebkitTextFillColor:
-										theme.palette.tertiary.main,
-								},
-							}}
-						>
-							business@projektcommunity.com
-						</Typography>
-					</Link>
-					<Typography
-						variant='h6'
-						sx={{ textDecoration: 'underline' }}
-					>
-						Support
-					</Typography>
-					<Link
-						to='mailto:support@projektcommunity.com'
-						target='_blank'
-					>
-						<Typography
-							variant='caption'
-							sx={{
-								'&:hover': {
-									color: theme.palette.tertiary.main,
-									textDecoration: 'underline',
-									WebkitTextFillColor:
-										theme.palette.tertiary.main,
-								},
-							}}
-						>
-							support@projektcommunity.com
-						</Typography>
-					</Link>
-				</Box>
-			</Grid>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
-				sx={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-				}}
-			>
-				<Box>
-					<Typography
-						variant='h6'
-						sx={{ textDecoration: 'underline' }}
+						variant='h3'
+						fontFamily={'Norwester'}
 					>
 						Quick Links
 					</Typography>
-					{[
-						{ name: 'Events', path: '/events' },
-						{ name: 'Groups', path: '/groups' },
-						{ name: 'Blog', path: '/blog' },
-						{ name: 'Shop', path: '/shop' },
-						{ name: 'About', path: '/about' },
-						{ name: 'Contact / FAQ', path: '/contact' },
-					].map((page, i) => (
-						<Link
-							to={page.path}
-							key={i}
-						>
-							<Typography
-								variant='body1'
-								sx={{
-									width: 'fit-content',
-									textDecoration: 'underline',
-									cursor: 'pointer',
-									'&:hover': {
-										color: theme.palette.tertiary.main,
-										textDecoration: 'underline',
-										WebkitTextFillColor:
-											theme.palette.tertiary.main,
-									},
-								}}
-							>
-								{page.name}
-							</Typography>
+					<Box p={2}>
+						<Link to={'/Events'}>
+							<Typography variant='h5'>Events</Typography>
 						</Link>
-					))}
-				</Box>
-			</Grid>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
-				sx={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-				}}
-			>
-				<Box
-					sx={{
-						height: '100%',
-					}}
+						{/* <Typography variant='h5'>Volunteer</Typography> */}
+						<Link to={'/FAQ'}>
+							<Typography variant='h5'>FAQ</Typography>
+						</Link>
+						{/* <Typography variant='h5'>Terms of Service</Typography> */}
+					</Box>
+				</Grid>
+				<Grid //Socials
+					md={3}
+					display='flex'
+					flexDirection='column'
+					justifyContent='start'
+					alignItems='center'
+					spacing={3}
 				>
 					<Typography
-						variant='h6'
-						sx={{ textDecoration: 'underline' }}
+						variant='h3'
+						fontFamily={'Norwester'}
 					>
-						Stay Connected
+						Socials
 					</Typography>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'flex-start',
-						}}
-					>
-						{[
-							{
-								name: 'Youtube',
-								link: 'https://www.youtube.com/@PJKT',
-								icon: <YouTube />,
-							},
-							{
-								name: 'Twitter',
-								link: 'https://twitter.com/PJKT_COM',
-								icon: <Twitter />,
-							},
-							{
-								name: 'Discord',
-								link: 'https://discord.gg/PJKT',
-								icon: <FontAwesomeSVGIcon icon={faDiscord} />,
-							},
-							{
-								name: 'Ko-fi',
-								link: 'https://ko-fi.com/pjkt',
-								icon: <Kofi />,
-							},
-							{
-								name: 'VRC Group',
-								link: 'https://vrc.group/PJKT.3741',
-								icon: <Vrc />,
-							},
-						].map((social, i) => (
-							<Box
-								key={i}
-								display='flex'
-								flexDirection='row'
-								alignItems='center'
-								gap={1}
-								onClick={() =>
-									window.open(social.link, '_blank')
-								}
-								sx={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									cursor: 'pointer',
-									'&:hover': {
-										color: theme.palette.tertiary.main,
-										textDecoration: 'underline',
-										WebkitTextFillColor:
-											theme.palette.tertiary.main,
-									},
-								}}
-							>
-								<Typography variant='body1'>
-									{social.name}
-								</Typography>
-								<Box>{social.icon}</Box>
-							</Box>
-						))}
+					<Box p={2}>
+						<IconButton
+							href='https://www.youtube.com/@PJKT'
+							target='_blank'
+						>
+							<YouTube fontSize='medium' />
+						</IconButton>
+						<IconButton
+							href='https://twitter.com/PJKT_COM'
+							target='_blank'
+						>
+							<Twitter fontSize='large' />
+						</IconButton>
+						<IconButton
+							href='https://discord.gg/PJKT'
+							target='_blank'
+						>
+							<FontAwesomeSVGIcon icon={faDiscord} />
+						</IconButton>
+						<IconButton
+							href='https://ko-fi.com/pjkt'
+							target='_blank'
+						>
+							<Kofi />
+						</IconButton>
 					</Box>
-				</Box>
+				</Grid>
 			</Grid>
-		</Grid>
+		</Box>
 	)
 }

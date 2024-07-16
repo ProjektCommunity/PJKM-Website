@@ -126,6 +126,7 @@ export default function FAQ() {
 			>
 				<Typography
 					variant='h2'
+					fontFamily='Nerdfont'
 					fontWeight='bold'
 					textAlign='center'
 				>

@@ -6,7 +6,7 @@ import {
 	createBrowserRouter,
 } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import theme from 'services/theme/theme'
+import { darkTheme, lightTheme } from 'services/theme/theme'
 import { RootState } from 'store/index'
 import './App.css'
 // import { Header } from './Components'
@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react'
 
 function App(props: { publicRoutes: RouteObject[] }) {
 	const { publicRoutes } = props
-	// const themeSlice = useSelector((state: RootState) => state.themeSlice)
+	const themeSlice = useSelector((state: RootState) => state.themeSlice)
 	const [init, setInit] = useState(false)
 
 	useEffect(() => {
@@ -42,7 +42,7 @@ function App(props: { publicRoutes: RouteObject[] }) {
 	])
 
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={themeSlice.darkTheme ? darkTheme : lightTheme}>
 			{/* <CssBaseline /> */}
 			<RouterProvider router={routers} />
 		</ThemeProvider>

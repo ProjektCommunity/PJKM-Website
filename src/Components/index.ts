@@ -1,3 +1,5 @@
-export { Header } from './HeaderFooter'
-export * as Home from './Home'
-export { FontAwesomeSVGIcon, Kofi, Pico, Viveport, Vrc } from './Icons'
+import { Header } from './HeaderFooter'
+import { Hero } from './Home'
+import { FontAwesomeSVGIcon, Kofi, Pico, Viveport } from './Icons'
+
+export { Header, Hero, FontAwesomeSVGIcon, Kofi, Pico, Viveport }

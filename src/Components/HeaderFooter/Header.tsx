@@ -12,10 +12,14 @@ import {
 	Paper,
 	useTheme,
 } from '@mui/material'
-import { Close, Menu as MenuIcon } from '@mui/icons-material'
+import { Menu as MenuIcon, Twitter, YouTube } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
 import { Fragment, useEffect, useReducer, useRef, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import Grid from '@mui/material/Unstable_Grid2/Grid2'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState, AppDispatch } from '@/store'
+import { toggleTheme } from '@/store/theme/themeSlice'
 import background from '@/assets/photos/Home/Background.png'
 import { Footer } from './Footer'
 const initState: {
@@ -25,7 +29,7 @@ const initState: {
 	storedRoute: string
 } = {
 	NavOpen: false,
-	headerHeight: 90,
+	headerHeight: 4,
 	footerHeight: null,
 	storedRoute: '',
 }
@@ -50,6 +54,7 @@ const reducer = (
 ): typeof initState => {
 	switch (action.type) {
 		case REDUCER_ACTION_TYPE.ToggleNav:
+			if (action.navOpen) return { ...state, NavOpen: action.navOpen }
 			return { ...state, NavOpen: !state.NavOpen }
 		case REDUCER_ACTION_TYPE.ToggleHeight:
 			return {
@@ -73,60 +78,36 @@ const reducer = (
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
 	[`.${drawerClasses.paperAnchorRight}`]: {
-		backgroundColor: theme.palette.accentDark.main,
+		backgroundColor: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText,
 	},
 }))
 
 export default function Header(props: { children: JSX.Element }) {
 	const [state, dispatch] = useReducer(reducer, initState)
-
-	const [paddingWidth, setPaddingWidth] = useState(55)
 	const ref = useRef<HTMLElement>(null)
 
 	const location = useLocation()
-	const navigate = useNavigate()
 
 	const handleToggleNav = () => {
 		dispatch({ type: REDUCER_ACTION_TYPE.ToggleNav })
 	}
 	const pages: { path: string; name: string }[] = [
 		{
-			path: '/events',
-			name: 'Events',
-		},
-		{
-			path: '/groups',
-			name: 'Groups',
-		},
-		{
-			path: '/blog',
-			name: 'Blog',
-		},
-		{
-			path: '/shop',
-			name: 'Shop',
-		},
-		{
 			path: '/about-us',
 			name: 'About',
 		},
 		{
-			path: '/contact',
-			name: 'Contact/FAQ',
+			path: '/events',
+			name: 'Events',
+		},
+		{
+			path: '/contact-us',
+			name: 'Contact',
 		},
 	]
 
 	const theme = useTheme()
-
-	const checkPaddingWidth = () => {
-		if (window.innerWidth > 1440) {
-			setPaddingWidth((window.innerWidth - 1000) / 8)
-			console.log((window.innerWidth - 1000) / 8)
-		} else {
-			console.log('55px')
-			return setPaddingWidth(55)
-		}
-	}
 
 	useEffect(() => {
 		if (location.pathname != state.storedRoute) {
@@ -136,42 +117,61 @@ export default function Header(props: { children: JSX.Element }) {
 			})
 			window.scrollTo(0, 0)
 		}
-	})
+		// window.addEventListener('scroll', () => {
+		// 	if (
+		// 		location.pathname == '/' &&
+		// 		((window.scrollY > 5 && state.headerHeight != 4) ||
+		// 			(window.scrollY < 5 && state.headerHeight != 8))
+		// 	)
+		// 		dispatch({ type: REDUCER_ACTION_TYPE.ToggleHeight })
+		// })
 
-	useEffect(() => {
-		checkPaddingWidth()
-		window.addEventListener('resize', checkPaddingWidth)
-		return () => window.removeEventListener('resize', checkPaddingWidth)
-	}, [])
+		setTimeout(() => {
+			dispatch({
+				type: REDUCER_ACTION_TYPE.SetFooterHeight,
+				footerHeight: document.querySelector('.footer')?.clientHeight,
+			})
+		}, 500)
+	})
 
 	return (
 		<>
 			<AppBar
-				position='relative'
+				position={location.pathname == '/' ? 'fixed' : 'relative'}
+				color={location.pathname == '/' ? 'transparent' : 'primary'}
+				enableColorOnDark
 				ref={ref}
 				sx={{
-					height: `90px`,
+					height: `${state.headerHeight}em`,
+					mb:
+						location.pathname === '/'
+							? `${0 - state.headerHeight}em`
+							: 0,
 					zIndex: 5,
+					transition: 'height 1s ease',
 				}}
 			>
 				<Box
-					px={{ xl: paddingWidth, lg: 20 }} // 60 * 4 = 240px
+					position={'absolute'}
+					top={0}
+					left={0}
+					width={'100%'}
 					height={'100%'}
-					justifyContent='space-between'
-					alignItems='center'
 					sx={{
-						display: 'flex',
-						[theme.breakpoints.down('lg')]: {
-							display: 'none',
-						},
+						zIndex: -1,
+						backdropFilter: 'blur(8px)',
+						backgroundColor: 'rgba(0,0,0,0.35)',
 					}}
+				/>
+				<Grid
+					container
+					mx={20}
+					display={{ xs: 'none', lg: 'flex' }}
+					height={'100%'}
 				>
-					<Box
-						display='flex'
-						alignItems='center'
+					<Grid
+						xs={6}
 						height='100%'
-						width='fit-content'
-						sx={{ gap: 28 / 4 }}
 					>
 						<Link
 							to='/'
@@ -187,59 +187,48 @@ export default function Header(props: { children: JSX.Element }) {
 								component='img'
 								src={PJKTFull}
 								height='100%'
-								width='auto'
 								mr={1}
 							/>
-						</Link>
-						{pages.map((page, i) => (
 							<Typography
-								onClick={() => {
-									navigate(page.path)
-								}}
-								variant='body1'
+								fontFamily='Norwester'
+								variant='h5'
+								color={theme.palette.primary.light}
+								lineHeight={0.9}
+								whiteSpace={'pre-wrap'}
+							>
+								Projekt:{`\n`}Community
+							</Typography>
+						</Link>
+					</Grid>
+					<Grid
+						xs={6}
+						display='flex'
+						flexDirection='row'
+						justifyContent='center'
+					>
+						{pages.map((page, i) => (
+							<Button
 								key={i}
 								sx={{
+									my: 2,
 									color: 'white',
-									width: 'fit-content',
-									p: 0,
-									cursor: 'pointer',
+									display: 'block',
 								}}
 							>
-								{page.name}
-							</Typography>
+								<Link to={page.path}>
+									<Typography variant='h6'>
+										{page.name}
+									</Typography>
+								</Link>
+							</Button>
 						))}
-					</Box>
-					<Button
-						variant='contained'
-						sx={{
-							height: 'fit-content',
-							width: 'fit-content',
-							fontSize: `${theme.typography.caption.fontSize} !important`,
-							fontFamily: theme.typography.body1.fontFamily,
-						}}
-					>
-						<Box
-							component='span'
-							sx={{
-								display: 'none',
-								[theme.breakpoints.up('xl')]: {
-									display: 'block',
-								},
-								mr: 1,
-							}}
-						>
-							Sign Up /
-						</Box>
-						Login
-					</Button>
-				</Box>
+					</Grid>
+				</Grid>
 				<Container
+					maxWidth='lg'
 					sx={{
-						display: 'none',
+						display: { xs: 'flex', lg: 'none' },
 						justifyContent: 'space-between',
-						[theme.breakpoints.down('lg')]: {
-							display: 'flex',
-						},
 					}}
 				>
 					<Link to='/'>
@@ -251,10 +240,7 @@ export default function Header(props: { children: JSX.Element }) {
 					</Link>
 					<IconButton
 						size='large'
-						onClick={() => {
-							console.log('click')
-							handleToggleNav()
-						}}
+						onClick={handleToggleNav}
 						color='inherit'
 					>
 						<MenuIcon />
@@ -269,37 +255,18 @@ export default function Header(props: { children: JSX.Element }) {
 							})
 						}
 						sx={{
-							display: 'flex',
-							[theme.breakpoints.up('lg')]: {
-								display: 'none',
-							},
+							display: { xs: 'flex', lg: 'none' },
 						}}
 					>
 						<Box
-							display='flex'
-							justifyContent='flex-end'
-							sx={{ px: 2, py: 4 }}
-						>
-							<IconButton
-								size='large'
-								onClick={handleToggleNav}
-								color='inherit'
-							>
-								<Close />
-							</IconButton>
-						</Box>
-						<Box
-							width='100vw'
-							maxWidth='400px'
+							my={15}
+							minWidth='30em'
 							display='flex'
 							flexDirection='column'
 						>
 							{pages.map((page, i) => (
 								<Fragment key={i}>
-									<Link
-										to={page.path}
-										onClick={handleToggleNav}
-									>
+									<Link to={page.path}>
 										<Button color='inherit'>
 											<Typography variant='h6'>
 												{page.name}
@@ -310,38 +277,27 @@ export default function Header(props: { children: JSX.Element }) {
 								</Fragment>
 							))}
 						</Box>
-
-						<Link
-							to='/'
-							onClick={handleToggleNav}
-						>
-							<Button variant='text'>Login / Sign Up</Button>
-						</Link>
-						<Divider />
 					</StyledDrawer>
 				</Container>
 			</AppBar>
-			<Box
+			<Paper
+				square
 				sx={{
 					minHeight: `calc(100vh - ${state.footerHeight}px)`,
-					background: theme.palette.background.default,
-					fontFamily: 'Poppins',
+					backgroundImage: `url(${background})`,
+					backgroundSize: 'cover',
+					backgroundPosition: 'center top',
 				}}
 			>
 				<Box
 					minHeight={`calc(100vh - calc(${state.headerHeight}em))`}
 					display='flex'
 					flexDirection='column'
-					sx={{
-						backgroundImage: `url(${background})`,
-						backgroundSize: 'cover',
-						backgroundPosition: 'center top',
-					}}
 				>
 					{props.children}
 				</Box>
 				<Footer />
-			</Box>
+			</Paper>
 		</>
 	)
 }
