@@ -337,7 +337,6 @@ function Initialized(props: {
 
 					<Typography
 						variant='h3'
-						fontFamily='Norwester'
 						textAlign='center'
 						mb={2}
 					>
@@ -362,7 +361,6 @@ function Initialized(props: {
 						<Typography
 							variant='h5'
 							textAlign='center'
-							fontFamily='Norwester'
 							mb={2}
 						>
 							{state.eventList.loaded.project.description}
@@ -618,7 +616,6 @@ function Thumbnail(props: { url: string }) {
 
 	return (
 		<Typography
-			fontFamily='Norwester'
 			sx={{
 				textShadow: '0px 20px 20px black',
 				textBorder: '3px solid black',
@@ -737,7 +734,6 @@ function EventFestival(props: {
 				>
 					<Typography
 						textAlign='center'
-						fontFamily='Norwester'
 						variant='h4'
 					>
 						{dates[date]}
@@ -982,7 +978,6 @@ function EventEaster(props: {
 		<>
 			<Typography
 				variant='h6'
-				fontFamily='Norwester'
 				mt={5}
 			>
 				{EasterHunt?.description}
