@@ -1,3 +1,3 @@
-import { Home, FAQ } from './Public'
+import { Home } from './Public'
 
-export { Home, FAQ }
+export { Home }
