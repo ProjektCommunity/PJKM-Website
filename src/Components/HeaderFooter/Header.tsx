@@ -358,6 +358,9 @@ export default function Header(props: { children: JSX.Element }) {
 						maxWidth={'997px'}
 						width={'95%'}
 						alignSelf={'center'}
+						flexGrow={1}
+						display='flex'
+						flexDirection='column'
 						// Pad top if not on home page
 						pt={location.pathname === '/' ? 0 : 10}
 					>

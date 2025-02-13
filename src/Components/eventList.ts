@@ -36,7 +36,29 @@ export class EventList {
 	}
 	
 	public getPast() {
-		return this.list.filter((project) => project.end_date < new Date())
+		const projects: {
+			year: number
+			projects: API.Project[]
+		}[] = []
+		const years = new Set<number>()
+		this.list.forEach((project) => {
+			// Check if the project is in the past
+			if (new Date(project.end_date) > new Date()) return
+			const year = project.start_date.getFullYear()
+			if (!years.has(year)) {
+				years.add(year)
+				projects.push({
+					year,
+					projects: [],
+				})
+			}
+			projects.find((p) => p.year === year)?.projects.push(project)
+		})
+		projects.sort((a, b) => b.year - a.year)
+		projects.forEach((project) => {
+			project.projects.sort((a, b) => b.start_date.getTime() - a.start_date.getTime())
+		})
+		return projects
 	}
 
 	//#endregion

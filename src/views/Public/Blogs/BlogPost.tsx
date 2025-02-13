@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import { Box, Button, Typography, useTheme } from '@mui/material'
-import Markdown from 'react-markdown'
+import Markdown from '@/Components/Markdown'
 import remarkGfm from 'remark-gfm'
+
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import * as API from '@/utils/API'
@@ -238,92 +239,7 @@ export default function BlogPost() {
 					color='white'
 					fontFamily='Atkinson Hyperlegible'
 				>
-					<Markdown
-						remarkPlugins={[remarkGfm]}
-						children={blog?.content}
-						components={{
-							h1: ({ children }) => (
-								<Typography
-									variant='h1'
-									py={4}
-								>
-									{children}
-								</Typography>
-							),
-							h2: ({ children }) => (
-								<Typography
-									variant='h2'
-									py={2}
-								>
-									{children}
-								</Typography>
-							),
-							h3: ({ children }) => (
-								<Typography
-									variant='h3'
-									py={1}
-								>
-									{children}
-								</Typography>
-							),
-							h4: ({ children }) => (
-								<Typography
-									variant='h4'
-									py={1}
-								>
-									{children}
-								</Typography>
-							),
-							h5: ({ children }) => (
-								<Typography
-									variant='h5'
-									py={1}
-								>
-									{children}
-								</Typography>
-							),
-							h6: ({ children }) => (
-								<Typography
-									variant='h6'
-									py={1}
-								>
-									{children}
-								</Typography>
-							),
-							p: ({ children }) => (
-								<Typography
-									variant='body1'
-									py={1}
-									// allow new lines
-									whiteSpace='pre-wrap'
-								>
-									{children}
-								</Typography>
-							),
-							ul: ({ children }) => <Box component='ul'>{children}</Box>,
-							li: ({ children }) => <Box component='li'>{children}</Box>,
-							img: ({ src, alt }) => (
-								<Box
-									component='img'
-									src={src}
-									alt={alt}
-								/>
-							),
-							a: ({ children, href }) => (
-								<Box
-									component='a'
-									sx={{
-										color: 'white',
-										textDecoration: 'underline',
-									}}
-									href={href}
-									target='_blank'
-								>
-									{children}
-								</Box>
-							),
-						}}
-					/>
+					<Markdown content={blog?.content || ''} />
 				</Box>
 			</Box>
 			<Box
