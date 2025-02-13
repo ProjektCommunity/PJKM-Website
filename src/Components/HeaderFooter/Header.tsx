@@ -10,12 +10,13 @@ import {
 	Typography,
 	styled,
 	useTheme,
+	SxProps,
 } from '@mui/material'
 import { Close, Menu as MenuIcon } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
 import { Fragment, useEffect, useReducer, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import background from '@/assets/photos/Home/Background.png'
+import Splat from '@/assets/Splat1.png'
 import { Footer } from './Footer'
 const initState: {
 	NavOpen: boolean
@@ -114,15 +115,12 @@ export default function Header(props: { children: JSX.Element }) {
 			name: 'Contact/FAQ',
 		},
 	]
-
 	const theme = useTheme()
 
 	const checkPaddingWidth = () => {
 		if (window.innerWidth > 1440) {
 			setPaddingWidth((window.innerWidth - 1000) / 8)
-			console.log((window.innerWidth - 1000) / 8)
 		} else {
-			console.log('55px')
 			return setPaddingWidth(55)
 		}
 	}
@@ -144,13 +142,18 @@ export default function Header(props: { children: JSX.Element }) {
 	}, [])
 
 	return (
-		<>
+		<Box
+			sx={{
+				position: 'relative',
+			}}
+		>
 			<AppBar
 				position='relative'
 				ref={ref}
 				sx={{
 					height: `90px`,
 					zIndex: 5,
+					background: theme.palette.accentDark.main,
 				}}
 			>
 				<Box
@@ -322,9 +325,11 @@ export default function Header(props: { children: JSX.Element }) {
 			</AppBar>
 			<Box
 				sx={{
-					minHeight: `calc(100vh - ${state.footerHeight}px)`,
+					minHeight: `calc(100vh - ${state.headerHeight}px)`,
 					background: theme.palette.background.default,
 					fontFamily: 'Poppins',
+					display: 'flex',
+					flexDirection: 'column',
 				}}
 			>
 				<Box
@@ -332,15 +337,125 @@ export default function Header(props: { children: JSX.Element }) {
 					display='flex'
 					flexDirection='column'
 					sx={{
-						backgroundImage: `url(${background})`,
-						backgroundSize: 'cover',
-						backgroundPosition: 'center top',
+						flexGrow: 1,
+						position: 'relative',
+						overflow: 'hidden',
 					}}
 				>
-					{props.children}
+					<Splats
+						sx={{
+							position: 'absolute',
+							left: '0',
+							top: 0,
+							transform: 'translate(0, 0)',
+							width: '100%',
+							height: '100%',
+							zIndex: 0,
+						}}
+					/>
+					<Box
+						zIndex={1}
+						maxWidth={'997px'}
+						width={'95%'}
+						alignSelf={'center'}
+						// Pad top if not on home page
+						pt={location.pathname === '/' ? 0 : 10}
+					>
+						{props.children}
+					</Box>
 				</Box>
 				<Footer />
 			</Box>
-		</>
+		</Box>
+	)
+}
+
+function Splats(props: { sx: SxProps }) {
+	const location = useLocation()
+	const [splats, setSplats] = useState<
+		{
+			flipped: boolean
+		}[]
+	>([])
+	const seed = 5123
+	function seededRandom(seed: number) {
+		let x = Math.sin(seed++) * 10000
+		return x - Math.floor(x)
+	}
+
+	const h = 800
+
+	useEffect(() => {
+		function createSplats() {
+			// Height of entire page
+			const windowHeight = document.body.scrollHeight
+			const splatCountY = Math.ceil(windowHeight / 400)
+			let newSplats = []
+			for (let i = 0; i < splatCountY; i++) {
+				newSplats.push({
+					flipped: seededRandom(seed) > 0.5,
+				})
+			}
+			setSplats(newSplats)
+		}
+
+		window.addEventListener('resize', createSplats)
+		createSplats()
+		return () => window.removeEventListener('resize', createSplats)
+	}, [location])
+	return (
+		<Box
+			sx={{
+				...props.sx,
+				mixBlendMode: 'soft-light',
+			}}
+		>
+			<Box
+				sx={{
+					display: 'grid',
+					flexDirection: 'column',
+					alignItems: 'flex-start',
+				}}
+			>
+				{splats.map((_, i) => (
+					<Box
+						key={i}
+						justifySelf={i % 2 !== 0 ? 'flex-start' : 'flex-end'}
+						position='relative'
+						width={'100%'}
+						// Grow the splat to the full width of the screen
+						sx={{
+							height: `${h}px`,
+						}}
+					>
+						<Box
+							sx={{
+								position: 'absolute',
+								left: `${i % 2 === 0 ? 0 : 95}%`,
+								transform: 'translate(-50%, 0%)',
+								height: `${h}px`,
+							}}
+						>
+							<Box
+								component='img'
+								src={Splat}
+								sx={{
+									height: `${h}px`,
+									width: 'auto',
+									transform: `rotate(${
+										220 +
+										(seededRandom(i + seed) > 0.5
+											? -1
+											: 1) *
+											seededRandom(seed + i) *
+											20
+									}deg)`,
+								}}
+							/>
+						</Box>
+					</Box>
+				))}
+			</Box>
+		</Box>
 	)
 }

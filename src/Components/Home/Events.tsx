@@ -2,21 +2,20 @@ import {
 	Box,
 	SxProps,
 	Typography,
-	Grid,
+	Grid2,
 	useTheme,
 	IconButton,
+	Button,
+	Theme,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { EventList } from '@/Components/eventList'
 import * as API from '@/utils/API'
-import {
-	ArrowForward,
-	ArrowLeft,
-	ArrowRight,
-} from '@mui/icons-material'
+import { ArrowForward, ArrowLeft, ArrowRight } from '@mui/icons-material'
+import { BoxProps } from '.'
 
-export default (props: { sx: SxProps }) => {
+export default (props?: BoxProps) => {
 	const theme = useTheme()
 	const navigate = useNavigate()
 	const [projects, setProjects] = useState<EventList>(new EventList([]))
@@ -90,45 +89,36 @@ export default (props: { sx: SxProps }) => {
 					setCanScroll(true)
 				else setCanScroll(false)
 			})
-		
 		}
 	}, [eventScroll, canScroll])
-
 	return (
 		<Box
 			display='flex'
 			flexDirection='column'
-			sx={{ ...props.sx, py: 5 }}
+			{...props}
 		>
-			<Grid container>
-				<Grid
-					item
-					md={4}
+			<Grid2 container>
+				<Grid2
+					size={4}
 					sx={{
 						display: { xs: 'none', md: 'block' },
 					}}
 				/>
-				<Grid
-					item
-					md={4}
-					xs={12}
-				>
-					<Typography
-						variant='h2'
-						align='center'
-						sx={{
-							textDecoration: 'underline',
-							fontWeight: 'bold',
-						}}
-					>
-						UPCOMING EVENTS
-					</Typography>
-				</Grid>
-				<Grid
-					item
-					md={4}
-					xs={12}
-				>
+				<Grid2 size={{ xs: 12, md: 4 }}>
+					<Link to='/events'>
+						<Typography
+							variant='h2'
+							align='center'
+							sx={{
+								textDecoration: 'underline',
+								fontWeight: 'bold',
+							}}
+						>
+							UPCOMING EVENTS
+						</Typography>
+					</Link>
+				</Grid2>
+				<Grid2 size={{ xs: 12, md: 4 }}>
 					<Box
 						height='60px'
 						display='flex'
@@ -167,11 +157,11 @@ export default (props: { sx: SxProps }) => {
 							<ArrowForward />
 						</Box>
 					</Box>
-				</Grid>
+				</Grid2>
 				{projects.list.length > 0 && (
-					<Grid
-						item
-						xs={12}
+					<Grid2
+						container
+						size={12}
 						spacing={5}
 						sx={{
 							flexGrow: 1,
@@ -227,87 +217,129 @@ export default (props: { sx: SxProps }) => {
 								}, 320)
 							}}
 						>
-							{projects.get().map((project, i) => (
+							{(projects.getUpcoming().length > 0 &&
+								projects.getUpcoming().map((project, i) => (
+									<Link
+										to={`/events/${project.id}`}
+										key={i}
+									>
+										<Button
+											sx={{
+												transition: 'transform 0.2s',
+												'&:hover': {
+													transform: 'scale(1.02)',
+												},
+											}}
+										>
+											<Box
+												width='304px'
+												minWidth='304px'
+												maxWidth='304px'
+												height='205px'
+												position='relative'
+												borderRadius='28px'
+												overflow='hidden'
+											>
+												<Box
+													position='absolute'
+													top={0}
+													left={0}
+													width='100%'
+													height='168px'
+													sx={{
+														backgroundImage: `url(${project.Logo?.path})`,
+														backgroundSize:
+															'contain',
+														backgroundRepeat:
+															'no-repeat',
+														backgroundPosition:
+															'center',
+														zIndex: 0,
+													}}
+												/>
+												<Box
+													sx={{
+														position: 'relative',
+														width: '100%',
+														height: '100%',
+														zIndex: 1,
+													}}
+												>
+													<Box
+														display='flex'
+														flexDirection='column'
+														justifyContent='flex-end'
+														alignItems='flex-start'
+														gap={1}
+														sx={{
+															width: 'calc(100% - 32px)',
+															height: 'calc(100% - 32px)',
+															background: `linear-gradient(0deg, ${project.ProjectTag?.color} 0%, rgba(255, 255, 255, 0) 100%)`,
+														}}
+														p={4}
+													>
+														<Typography
+															variant='h4'
+															textTransform={
+																'uppercase'
+															}
+															fontWeight={'bold'}
+															sx={{
+																color: theme
+																	.palette
+																	.accentLight
+																	.contrastText,
+																// white outer outline
+																textShadow:
+																	'1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff',
+															}}
+														>
+															{project.name}
+														</Typography>
+														<Typography
+															variant='body1'
+															sx={{
+																color: theme
+																	.palette
+																	.accentLight
+																	.contrastText,
+															}}
+														>
+															{formatter.format(
+																project.start_date
+															)}{' '}
+															-{' '}
+															{formatter.format(
+																project.end_date
+															)}
+														</Typography>
+													</Box>
+												</Box>
+											</Box>
+										</Button>
+									</Link>
+								))) || (
 								<Box
-									key={i}
-									width='304px'
-									minWidth='304px'
-									maxWidth='304px'
-									height='205px'
-									position='relative'
-									borderRadius='28px'
-									overflow='hidden'
+									sx={{
+										width: '100%',
+										display: 'flex',
+										justifyContent: 'center',
+									}}
 								>
-									<Box
-										position='absolute'
-										top={0}
-										left={0}
-										width='100%'
-										height='168px'
+									<Typography
+										variant='h3'
+										align='center'
+										pt={5}
 										sx={{
-											backgroundImage: `url(${project.Logo?.path})`,
-											backgroundSize: 'contain',
-											backgroundRepeat: 'no-repeat',
-											backgroundPosition: 'center',
-											zIndex: 0,
-										}}
-									/>
-									<Box
-										sx={{
-											position: 'relative',
-											width: '100%',
-											height: '100%',
-											zIndex: 1,
+											color: theme.palette.accentDark
+												.contrastText,
 										}}
 									>
-										<Box
-											display='flex'
-											flexDirection='column'
-											justifyContent='flex-end'
-											alignItems='flex-start'
-											gap={1}
-											sx={{
-												width: 'calc(100% - 32px)',
-												height: 'calc(100% - 32px)',
-												background: `linear-gradient(0deg, ${project.ProjectTag?.color} 0%, rgba(255, 255, 255, 0) 100%)`,
-											}}
-											p={4}
-										>
-											<Typography
-												variant='h4'
-												textTransform={'uppercase'}
-												fontWeight={'bold'}
-												sx={{
-													color: theme.palette
-														.accentLight
-														.contrastText,
-													// white outer outline
-													textShadow:
-														'1px 1px 0px #fff, -1px -1px 0px #fff, 1px -1px 0px #fff, -1px 1px 0px #fff',
-												}}
-											>
-												{project.name}
-											</Typography>
-											<Typography
-												variant='body1'
-												sx={{
-													color: theme.palette
-														.accentLight
-														.contrastText,
-												}}
-											>
-												{formatter.format(
-													project.start_date
-												)}{' '}
-												-{' '}
-												{formatter.format(
-													project.end_date
-												)}
-											</Typography>
-										</Box>
-									</Box>
+										No events have been scheduled. Stay
+										Tuned!
+									</Typography>
 								</Box>
-							))}
+							)}
 						</Box>
 						{canScroll && (
 							<Box
@@ -330,9 +362,9 @@ export default (props: { sx: SxProps }) => {
 								</IconButton>
 							</Box>
 						)}
-					</Grid>
+					</Grid2>
 				)}
-			</Grid>
+			</Grid2>
 		</Box>
 	)
 }

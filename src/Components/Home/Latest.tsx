@@ -1,49 +1,18 @@
 import { ArrowForward, Search } from '@mui/icons-material'
-import {
-	Box,
-	Typography,
-	SxProps,
-	useTheme,
-	Grid,
-	Card,
-	TextField,
-	Button,
-	styled,
-	OutlinedInputProps,
-	TextFieldProps,
-	IconButton,
-} from '@mui/material'
+import * as API from '@/utils/API'
+import { Box, Typography, SxProps, useTheme, Grid, Card, TextField, Button, styled, OutlinedInputProps, TextFieldProps, IconButton, Grid2 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-	faSprayCan,
-	faGhost,
-	faPenNib,
-	faEgg,
-	faCamera,
-} from '@fortawesome/free-solid-svg-icons'
+import { faSprayCan, faGhost, faPenNib, faEgg, faCamera } from '@fortawesome/free-solid-svg-icons'
+
+import { PjktIcons } from '@/views/Public/Blogs/BlogPosts'
 
 import GerzyJames from '@/assets/photos/Home/Gerzy_and_Jamez.png'
+import { BoxProps } from '.'
 
-export default function Latest(props: { sx: SxProps }) {
-	const [announcements, setAnnouncements] = useState<
-		| {
-				id: number
-				title: string
-				date: Date
-				tag: {
-					name:
-						| 'Fest'
-						| 'Graffiti Grab'
-						| 'HorrorCon'
-						| 'Lenz'
-						| 'Ink'
-					color: string
-				}
-		  }[]
-		| null
-	>(null)
+export default function Latest(props?: BoxProps) {
+	const [announcements, setAnnouncements] = useState<API.Blog[] | null>(null)
 
 	const theme = useTheme()
 
@@ -55,95 +24,25 @@ export default function Latest(props: { sx: SxProps }) {
 
 	// Fetch latest announcement
 	async function FetchLatest() {
-		const fakeTakes = [
-			{
-				name: 'Fest',
-				color: `#FC00AD`,
-			},
-			{
-				name: 'Graffiti Grab',
-				color: '#FFE400',
-			},
-			{
-				name: 'HorrorCon',
-				color: '#F70000',
-			},
-			{
-				name: 'Lenz',
-				color: '#00C6FF',
-			},
-			{
-				name: 'Ink',
-				color: '#FFFFFF',
-			},
-		]
-		// Fake Fetch
-		return new Promise((resolve) => {
-			// wait 1 second
-			setTimeout(() => {
-				const titles = 'Title'
-					.repeat(5)
-					.split('Title')
-					.fill('Title ')
-					.slice(1)
-				resolve(
-					titles.map((title, index) => ({
-						title: `${title} ${index}`,
-						id: index + 1,
-						date: new Date(),
-						tag: fakeTakes[index % fakeTakes.length] as {
-							name:
-								| 'Fest'
-								| 'Graffiti Grab'
-								| 'HorrorCon'
-								| 'Lenz'
-								| 'Ink'
-							color: string
-						},
-					}))
-				)
-			}, 1000)
-		}) as Promise<
-			{
-				id: number
-				title: string
-				date: Date
-				tag: {
-					name:
-						| 'Fest'
-						| 'Graffiti Grab'
-						| 'HorrorCon'
-						| 'Lenz'
-						| 'Ink'
-					color: string
-				}
-			}[]
-		>
+		return API.getBlogs({ limit: 5 }) as Promise<API.BlogsResponse>
 	}
 
 	useEffect(() => {
 		if (!announcements)
 			FetchLatest().then((data) => {
-				setAnnouncements(data)
+				setAnnouncements(data.blogs)
 			})
 	}, [announcements])
 
 	return (
-		<Box
-			sx={{
-				...props.sx,
-				my: 4,
-			}}
-		>
-			<Grid
+		<Box {...props}>
+			<Grid2
 				container
 				columnSpacing={{ xs: 0, md: 4 }}
 				rowSpacing={{ xs: 4, md: 0 }}
 			>
-				<Grid
-					item
-					xs={12}
-					md={6}
+				<Grid2
+					size={{ xs: 12, md: 6 }}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
@@ -169,132 +68,101 @@ export default function Latest(props: { sx: SxProps }) {
 							announcements.length > 0 &&
 							announcements.map((announcement) => {
 								return (
-									<Button
-										sx={{
-											m: 0,
-											p: 0,
-											borderRadius: '16px !important',
-											backgroundColor:
-												theme.palette.accentDark.main,
-											'&:hover': {
-												backgroundColor:
-													announcement.tag.color,
-												WebkitTextFillColor:
-													theme.palette.getContrastText(
-														announcement.tag.color
-													),
-											},
-										}}
+									<Link
+										to={`/blog/${announcement.id}`}
+										key={announcement.id}
 									>
-										<Card
+										<Button
 											key={announcement.id}
+											fullWidth
 											sx={{
-												flexGrow: 1,
-												display: 'flex',
-												alignItems: 'center',
-												borderRadius: 4,
-												backgroundColor: 'transparent',
+												m: 0,
+												p: 0,
+												borderRadius: '16px !important',
+												backgroundColor: theme.palette.accentDark.main,
+												'&:hover': {
+													backgroundColor: announcement.ProjectTag?.color,
+													WebkitTextFillColor: theme.palette.getContrastText(announcement.ProjectTag?.color || theme.palette.accentDark.main),
+												},
 											}}
 										>
-											<Box
+											<Card
+												key={announcement.id}
 												sx={{
 													width: '100%',
-													maxWidth: '65px',
-													height: '65px',
 													display: 'flex',
-													justifyContent: 'center',
-													alignItems: 'center',
-													backgroundColor:
-														announcement.tag.color,
-													color: theme.palette.getContrastText(
-														announcement.tag.color
-													),
+													borderRadius: 4,
+													backgroundColor: 'transparent',
 												}}
 											>
-												{(announcement.tag.name ===
-													'Fest' && (
+												<Box
+													sx={{
+														flexGrow: 1,
+														width: '80px',
+														display: 'flex',
+														justifyContent: 'center',
+														alignItems: 'center',
+														backgroundColor: announcement.ProjectTag?.color,
+														color: theme.palette.getContrastText(announcement.ProjectTag?.color || theme.palette.accentDark.main),
+													}}
+												>
 													<FontAwesomeIcon
-														icon={faSprayCan}
+														icon={(announcement.ProjectTag && PjktIcons[announcement.ProjectTag.name]) || PjktIcons.Other}
 														size='2x'
 													/>
-												)) ||
-													(announcement.tag.name ===
-														'Graffiti Grab' && (
-														<FontAwesomeIcon
-															icon={faEgg}
-															size='2x'
-														/>
-													)) ||
-													(announcement.tag.name ===
-														'HorrorCon' && (
-														<FontAwesomeIcon
-															icon={faGhost}
-															size='2x'
-														/>
-													)) ||
-													(announcement.tag.name ===
-														'Lenz' && (
-														<FontAwesomeIcon
-															icon={faCamera}
-															size='2x'
-														/>
-													)) ||
-													(announcement.tag.name ===
-														'Ink' && (
-														<FontAwesomeIcon
-															icon={faPenNib}
-															size='2x'
-														/>
-													))}
-											</Box>
-											<Box
-												px={2}
-												width='100%'
-												height='fit-content'
-												display='flex'
-												flexDirection='column'
-												justifyContent='space-evenly'
-												alignItems='center'
-												gap={1}
-											>
-												<Typography
-													variant='body1'
-													sx={{
-														width: '100%',
-														textAlign: 'left',
-													}}
+												</Box>
+												<Box
+													px={2}
+													width='100%'
+													display='flex'
+													flexDirection='column'
+													justifyContent='space-evenly'
+													alignItems='left'
+													gap={1}
 												>
-													{formatter.format(
-														new Date(
-															announcement.date
-														)
-													)}
-												</Typography>
-												<Typography
-													variant='h5'
-													fontWeight='bold'
-													sx={{
-														width: '100%',
-														textAlign: 'left',
-													}}
-												>
-													{announcement.title}
-												</Typography>
-											</Box>
+													<Typography
+														variant='body1'
+														sx={{
+															maxWidth: '100%',
+															width: 'fit-content',
+															textAlign: 'left',
+														}}
+													>
+														{formatter.format(new Date(announcement.createdAt))}
+													</Typography>
+													<Box
+														width='100%'
+														height='100%'
+													>
+														<Typography
+															textAlign='left'
+															variant='h5'
+															sx={{
+																textDecoration: 'underline',
+															}}
+														>
+															{announcement.title}
+														</Typography>
+													</Box>
+												</Box>
 
-											<Box>
-												<ArrowForward />
-											</Box>
-										</Card>
-									</Button>
+												<Box
+													width='fit-content'
+													height='100%'
+													display='flex'
+													alignItems='center'
+												>
+													<ArrowForward />
+												</Box>
+											</Card>
+										</Button>
+									</Link>
 								)
 							})}
 					</Box>
-				</Grid>
-				<Grid
-					item
-					xs={12}
-					md={6}
+				</Grid2>
+				<Grid2
+					size={{ xs: 12, md: 6 }}
 					display='flex'
 					flexDirection='column'
 					justifyContent='space-between'
@@ -322,8 +190,7 @@ export default function Latest(props: { sx: SxProps }) {
 								left: 0,
 								width: '100%',
 								height: '100%',
-								background:
-									'linear-gradient(90deg, rgba(0,176,254,1) 0%, rgba(255,228,0,1) 100%)',
+								background: 'linear-gradient(90deg, rgba(0,176,254,1) 0%, rgba(255,228,0,1) 100%)',
 							}}
 						/>
 
@@ -402,9 +269,7 @@ export default function Latest(props: { sx: SxProps }) {
 										<IconButton>
 											<Search
 												sx={{
-													color: theme.palette
-														.accentDark
-														.contrastText,
+													color: theme.palette.accentDark.contrastText,
 												}}
 											/>
 										</IconButton>
@@ -422,15 +287,19 @@ export default function Latest(props: { sx: SxProps }) {
 							</Button>
 						</Box>
 					</Box>
-				</Grid>
-			</Grid>
+				</Grid2>
+			</Grid2>
 		</Box>
 	)
 }
 
 const CustomTextField = styled((props: TextFieldProps) => (
 	<TextField
-		InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>}
+		slotProps={{
+			input: {
+				disableUnderline: true,
+			},
+		}}
 		{...props}
 	/>
 ))(({ theme }) => ({

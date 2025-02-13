@@ -7,5 +7,6 @@ export const client = axios.create({
 	},
 })
 
-export type { event, Project } from './Types'
-export { getProjects } from './Projects'
+export type * from './Types'
+export * from './Projects'
+export * from './Blogs'

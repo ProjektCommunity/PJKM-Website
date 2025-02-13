@@ -1,20 +1,18 @@
-import { Box, SxProps, Typography, Grid } from '@mui/material'
+import { Box, Typography, Grid2, Grid2Props } from '@mui/material'
 import GroupPic from '@/assets/photos/Home/Group.png'
+import { BoxProps } from '.'
 
-export default (props: { sx: SxProps }) => {
+export default (props?: BoxProps | Grid2Props) => {
 	return (
-		<Grid
+		<Grid2
+			{...props as Grid2Props}
 			container
 			flexDirection='row-reverse'
 			justifyContent='center'
 			alignItems='center'
-			sx={{ ...props.sx, display: 'flex', flexDirection: 'row' }}
+			sx={{ display: 'flex', flexDirection: 'row' }}
 		>
-			<Grid
-				item
-				md={6}
-				xs={12}
-			>
+			<Grid2 size={{ xs: 12, md: 6 }}>
 				<Typography
 					variant='h2'
 					textTransform='uppercase'
@@ -45,13 +43,9 @@ export default (props: { sx: SxProps }) => {
 					no matter if you are a lone artist, or a massive group, to
 					celebrate the unique culture of VR.
 				</Typography>
-			</Grid>
+			</Grid2>
 
-			<Grid
-				item
-				md={6}
-				xs={12}
-			>
+			<Grid2 size={{ xs: 12, md: 6 }}>
 				<Box
 					sx={{
 						backgroundImage: `url(${GroupPic})`,
@@ -63,7 +57,7 @@ export default (props: { sx: SxProps }) => {
 						minHeight: '471px',
 					}}
 				/>
-			</Grid>
-		</Grid>
+			</Grid2>
+		</Grid2>
 	)
 }

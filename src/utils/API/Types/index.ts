@@ -66,3 +66,53 @@ export interface Venue {
 	deletedAt: Date | null
 	community_id: number
 }
+
+export interface BlogsResponse {
+	blogs: Blog[]
+	meta: {
+		total: number // Total blogs
+		pages: number // Total pages
+		current: number // Current page
+	}
+}
+
+export interface BlogResponse {
+	blog: Blog
+	meta: {
+		hasPrevious: boolean
+		hasNext: boolean
+	}
+}
+
+export interface Blog {
+	id: number
+	title: string
+	content: string
+	createdAt: string
+	updatedAt: string
+	Author: {
+		User: {
+			username: string
+		}
+	}
+	Image: {
+		path: string
+	} | null
+	ProjectTag: {
+		id: number
+		name: string
+		color: string
+	} | null
+	Categories:
+		| {
+				name: string
+		  }[]
+		| null
+}
+
+export interface Category {
+	id: number
+	name: string
+	createdAt: string
+	updatedAt: string
+}
