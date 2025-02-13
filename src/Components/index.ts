@@ -1,5 +1,5 @@
-import { Header } from './HeaderFooter'
-import { Hero } from './Home'
-import { FontAwesomeSVGIcon, Kofi, Pico, Viveport } from './Icons'
-
-export { Header, Hero, FontAwesomeSVGIcon, Kofi, Pico, Viveport }
+export { Header } from './HeaderFooter'
+export * as Home from './Home'
+import Page from './Page'
+export { FontAwesomeSVGIcon, Kofi, Pico, Viveport, Vrc } from './Icons'
+export { Page }

@@ -1,3 +1,1 @@
-import { Home } from './Public'
-
-export { Home }
+export * from './Public'

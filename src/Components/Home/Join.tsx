@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	Grid,
+	Grid2,
 	SxProps,
 	Typography,
 	useTheme,
@@ -10,12 +11,13 @@ import VRChat from '@/assets/photos/Home/Experience in VRChat_White.png'
 import { FontAwesomeSVGIcon, Pico, Viveport } from '..'
 import { faSteam, faMeta, faAndroid } from '@fortawesome/free-brands-svg-icons'
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
+import { BoxProps } from '.'
 
 const isFontAwesome = (x: any): x is IconDefinition => {
 	return Object.keys(x).includes('prefix')
 }
 
-export default (props: { sx: SxProps }) => {
+export default (props?: BoxProps) => {
 	const downloadLinks: {
 		name: string
 		url: string
@@ -37,7 +39,7 @@ export default (props: { sx: SxProps }) => {
 			icon: Viveport,
 		},
 		{
-			name: 'Android [Beta]',
+			name: 'Google Play',
 			url: 'https://play.google.com/store/apps/details?id=com.vrchat.mobile.playstore&hl=en_US',
 			icon: faAndroid,
 		},
@@ -52,8 +54,8 @@ export default (props: { sx: SxProps }) => {
 
 	return (
 		<Box
+			{...props}
 			sx={{
-				...props.sx,
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'center',
@@ -61,11 +63,12 @@ export default (props: { sx: SxProps }) => {
 				gap: 4,
 			}}
 		>
-			<Grid container spacing={2}>
-				<Grid
-					xs={12}
-					lg={6}
-					item
+			<Grid2
+				container
+				spacing={2}
+			>
+				<Grid2
+					size={{ xs: 12, lg: 6 }}
 					sx={{
 						display: 'flex',
 					}}
@@ -83,11 +86,9 @@ export default (props: { sx: SxProps }) => {
 							window.open('https://hello.vrchat.com/')
 						}}
 					/>
-				</Grid>
-				<Grid
-					item
-					xs={12}
-					lg={6}
+				</Grid2>
+				<Grid2
+					size={{ xs: 12, lg: 6 }}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
@@ -128,23 +129,26 @@ export default (props: { sx: SxProps }) => {
 					>
 						* VR Not Required
 					</Typography>
-				</Grid>
-			</Grid>
-			<Grid
+				</Grid2>
+			</Grid2>
+			<Grid2
 				container
 				spacing={4}
+				justifyContent={'center'}
+				alignContent='center'
 				pb={2}
+				width='100%'
 			>
 				{downloadLinks.map((link) => {
 					const Icon = link.icon
 					return (
-						<Grid
-							item
+						<Grid2
 							key={link.name}
-							xs={12}
-							md={6}
-							lg={4}
-							xl={12 / downloadLinks.length}
+							size={{
+								xs: 12,
+								md: 6,
+								lg: 4,
+							}}
 						>
 							<Button
 								href={link.url}
@@ -156,6 +160,17 @@ export default (props: { sx: SxProps }) => {
 									minWidth: '5em',
 									color: theme.palette.accentLight
 										.contrastText,
+									'&:hover': {
+										backgroundColor:
+											theme.palette.accentDark.main,
+										color: theme.palette.accentDark
+											.contrastText,
+										fill: theme.palette.accentDark
+											.contrastText,
+										WebkitTextFillColor:
+											theme.palette.accentDark
+												.contrastText,
+									},
 								}}
 								startIcon={
 									isFontAwesome(Icon) ? (
@@ -170,14 +185,15 @@ export default (props: { sx: SxProps }) => {
 									color={
 										theme.palette.accentLight.contrastText
 									}
+									noWrap
 								>
 									{link.name}
 								</Typography>
 							</Button>
-						</Grid>
+						</Grid2>
 					)
 				})}
-			</Grid>
+			</Grid2>
 		</Box>
 	)
 }

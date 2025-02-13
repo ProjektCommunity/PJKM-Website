@@ -1,4 +1,4 @@
-import { Box, Typography, Grid } from '@mui/material'
+import { Box, Typography, Grid, Grid2 } from '@mui/material'
 import { Twitter, YouTube } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
 import { Link } from 'react-router-dom'
@@ -13,9 +13,7 @@ export const Footer = () => {
 	const checkPaddingWidth = () => {
 		if (window.innerWidth > 1440) {
 			setPaddingWidth((window.innerWidth - 1000) / 8)
-			console.log((window.innerWidth - 1000) / 8)
 		} else {
-			console.log('55px')
 			return setPaddingWidth(55)
 		}
 	}
@@ -27,7 +25,7 @@ export const Footer = () => {
 	}, [])
 
 	return (
-		<Grid
+		<Grid2
 			container
 			gap={0}
 			spacing={4}
@@ -43,12 +41,7 @@ export const Footer = () => {
 				color: theme.palette.accentDark.contrastText,
 			}}
 		>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
-			>
+			<Grid2 size={{ xl: 3, md: 6, xs: 12 }}>
 				<Box
 					sx={{
 						backgroundImage: `url(${PJKTFull})`,
@@ -62,12 +55,9 @@ export const Footer = () => {
 						mx: 'auto',
 					}}
 				/>
-			</Grid>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
+			</Grid2>
+			<Grid2
+				size={{ xl: 3, md: 6, xs: 12 }}
 				sx={{
 					display: 'flex',
 					flexDirection: 'row',
@@ -131,12 +121,9 @@ export const Footer = () => {
 						</Typography>
 					</Link>
 				</Box>
-			</Grid>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
+			</Grid2>
+			<Grid2
+				size={{ xl: 3, md: 6, xs: 12 }}
 				sx={{
 					display: 'flex',
 					flexDirection: 'row',
@@ -182,12 +169,9 @@ export const Footer = () => {
 						</Link>
 					))}
 				</Box>
-			</Grid>
-			<Grid
-				item
-				xl={3}
-				md={6}
-				xs={12}
+			</Grid2>
+			<Grid2
+				size={{ xl: 3, md: 6, xs: 12 }}
 				sx={{
 					display: 'flex',
 					flexDirection: 'row',
@@ -270,7 +254,7 @@ export const Footer = () => {
 						))}
 					</Box>
 				</Box>
-			</Grid>
-		</Grid>
+			</Grid2>
+		</Grid2>
 	)
 }

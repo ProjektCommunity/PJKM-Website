@@ -6,3 +6,8 @@ export async function getProjects(): Promise<API.Project[]> {
 	const res = await client.get('/projects')
 	return res.data.projects as API.Project[]
 }
+
+export async function GetProjectTags(): Promise<API.Tag[]> {
+	const res = await client.get('/project/tags')
+	return res.data as API.Tag[]
+}

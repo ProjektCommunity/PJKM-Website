@@ -1,16 +1,12 @@
 import { ThemeProvider } from '@mui/material'
-import {
-	Navigate,
-	RouteObject,
-	RouterProvider,
-	createBrowserRouter,
-} from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import theme from 'services/theme/theme'
 import './App.css'
 import { useEffect, useState } from 'react'
+import { Page } from './Components'
+import { Home, UpcomingEvents, PastEvents, BlogPost, BlogPosts } from './views'
 
-function App(props: { publicRoutes: RouteObject[] }) {
-	const { publicRoutes } = props
+function App() {
 	const [init, setInit] = useState(false)
 
 	useEffect(() => {
@@ -26,7 +22,32 @@ function App(props: { publicRoutes: RouteObject[] }) {
 
 	const routers = createBrowserRouter([
 		{
-			children: publicRoutes,
+			children: [
+				{
+					path: '/',
+					element: Page(Home),
+				},
+				{
+					path: '/events',
+					element: Page(UpcomingEvents),
+				},
+				{
+					path: '/events/past',
+					element: Page(PastEvents),
+				},
+				{
+					path: '/events/:id',
+					element: Page(UpcomingEvents),
+				},
+				{
+					path: '/blog',
+					element: Page(BlogPosts),
+				},
+				{
+					path: '/blog/:id',
+					element: Page(BlogPost),
+				},
+			],
 		},
 		{
 			path: '*',

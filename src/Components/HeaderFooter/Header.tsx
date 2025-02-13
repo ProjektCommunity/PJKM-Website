@@ -10,16 +10,13 @@ import {
 	Typography,
 	styled,
 	useTheme,
+	SxProps,
 } from '@mui/material'
-import { Menu as MenuIcon, Twitter, YouTube } from '@mui/icons-material'
+import { Close, Menu as MenuIcon } from '@mui/icons-material'
 import PJKTFull from '@/assets/PJKT-01.png'
 import { Fragment, useEffect, useReducer, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import Grid from '@mui/material/Unstable_Grid2/Grid2'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState, AppDispatch } from '@/store'
-import { toggleTheme } from '@/store/theme/themeSlice'
-import background from '@/assets/photos/Home/Background.png'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import Splat from '@/assets/Splat1.png'
 import { Footer } from './Footer'
 const initState: {
 	NavOpen: boolean
@@ -28,7 +25,7 @@ const initState: {
 	storedRoute: string
 } = {
 	NavOpen: false,
-	headerHeight: 4,
+	headerHeight: 90,
 	footerHeight: null,
 	storedRoute: '',
 }
@@ -53,7 +50,6 @@ const reducer = (
 ): typeof initState => {
 	switch (action.type) {
 		case REDUCER_ACTION_TYPE.ToggleNav:
-			if (action.navOpen) return { ...state, NavOpen: action.navOpen }
 			return { ...state, NavOpen: !state.NavOpen }
 		case REDUCER_ACTION_TYPE.ToggleHeight:
 			return {
@@ -77,36 +73,57 @@ const reducer = (
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
 	[`.${drawerClasses.paperAnchorRight}`]: {
-		backgroundColor: theme.palette.primary.main,
-		color: theme.palette.primary.contrastText,
+		backgroundColor: theme.palette.accentDark.main,
 	},
 }))
 
 export default function Header(props: { children: JSX.Element }) {
 	const [state, dispatch] = useReducer(reducer, initState)
+
+	const [paddingWidth, setPaddingWidth] = useState(55)
 	const ref = useRef<HTMLElement>(null)
 
 	const location = useLocation()
+	const navigate = useNavigate()
 
 	const handleToggleNav = () => {
 		dispatch({ type: REDUCER_ACTION_TYPE.ToggleNav })
 	}
 	const pages: { path: string; name: string }[] = [
 		{
-			path: '/about-us',
-			name: 'About',
-		},
-		{
 			path: '/events',
 			name: 'Events',
 		},
 		{
-			path: '/contact-us',
-			name: 'Contact',
+			path: '/groups',
+			name: 'Groups',
+		},
+		{
+			path: '/blog',
+			name: 'Blog',
+		},
+		{
+			path: '/shop',
+			name: 'Shop',
+		},
+		{
+			path: '/about-us',
+			name: 'About',
+		},
+		{
+			path: '/contact',
+			name: 'Contact/FAQ',
 		},
 	]
-
 	const theme = useTheme()
+
+	const checkPaddingWidth = () => {
+		if (window.innerWidth > 1440) {
+			setPaddingWidth((window.innerWidth - 1000) / 8)
+		} else {
+			return setPaddingWidth(55)
+		}
+	}
 
 	useEffect(() => {
 		if (location.pathname != state.storedRoute) {
@@ -116,61 +133,47 @@ export default function Header(props: { children: JSX.Element }) {
 			})
 			window.scrollTo(0, 0)
 		}
-		// window.addEventListener('scroll', () => {
-		// 	if (
-		// 		location.pathname == '/' &&
-		// 		((window.scrollY > 5 && state.headerHeight != 4) ||
-		// 			(window.scrollY < 5 && state.headerHeight != 8))
-		// 	)
-		// 		dispatch({ type: REDUCER_ACTION_TYPE.ToggleHeight })
-		// })
-
-		setTimeout(() => {
-			dispatch({
-				type: REDUCER_ACTION_TYPE.SetFooterHeight,
-				footerHeight: document.querySelector('.footer')?.clientHeight,
-			})
-		}, 500)
 	})
 
+	useEffect(() => {
+		checkPaddingWidth()
+		window.addEventListener('resize', checkPaddingWidth)
+		return () => window.removeEventListener('resize', checkPaddingWidth)
+	}, [])
+
 	return (
-		<>
+		<Box
+			sx={{
+				position: 'relative',
+			}}
+		>
 			<AppBar
-				position={location.pathname == '/' ? 'fixed' : 'relative'}
-				color={location.pathname == '/' ? 'transparent' : 'primary'}
-				enableColorOnDark
+				position='relative'
 				ref={ref}
 				sx={{
-					height: `${state.headerHeight}em`,
-					mb:
-						location.pathname === '/'
-							? `${0 - state.headerHeight}em`
-							: 0,
+					height: `90px`,
 					zIndex: 5,
-					transition: 'height 1s ease',
+					background: theme.palette.accentDark.main,
 				}}
 			>
 				<Box
-					position={'absolute'}
-					top={0}
-					left={0}
-					width={'100%'}
+					px={{ xl: paddingWidth, lg: 20 }} // 60 * 4 = 240px
 					height={'100%'}
+					justifyContent='space-between'
+					alignItems='center'
 					sx={{
-						zIndex: -1,
-						backdropFilter: 'blur(8px)',
-						backgroundColor: 'rgba(0,0,0,0.35)',
+						display: 'flex',
+						[theme.breakpoints.down('lg')]: {
+							display: 'none',
+						},
 					}}
-				/>
-				<Grid
-					container
-					mx={20}
-					display={{ xs: 'none', lg: 'flex' }}
-					height={'100%'}
 				>
-					<Grid
-						xs={6}
+					<Box
+						display='flex'
+						alignItems='center'
 						height='100%'
+						width='fit-content'
+						sx={{ gap: 28 / 4 }}
 					>
 						<Link
 							to='/'
@@ -186,48 +189,59 @@ export default function Header(props: { children: JSX.Element }) {
 								component='img'
 								src={PJKTFull}
 								height='100%'
+								width='auto'
 								mr={1}
 							/>
-							<Typography
-								fontFamily='Norwester'
-								variant='h5'
-								color={theme.palette.primary.light}
-								lineHeight={0.9}
-								whiteSpace={'pre-wrap'}
-							>
-								Projekt:{`\n`}Community
-							</Typography>
 						</Link>
-					</Grid>
-					<Grid
-						xs={6}
-						display='flex'
-						flexDirection='row'
-						justifyContent='center'
-					>
 						{pages.map((page, i) => (
-							<Button
+							<Typography
+								onClick={() => {
+									navigate(page.path)
+								}}
+								variant='body1'
 								key={i}
 								sx={{
-									my: 2,
 									color: 'white',
-									display: 'block',
+									width: 'fit-content',
+									p: 0,
+									cursor: 'pointer',
 								}}
 							>
-								<Link to={page.path}>
-									<Typography variant='h6'>
-										{page.name}
-									</Typography>
-								</Link>
-							</Button>
+								{page.name}
+							</Typography>
 						))}
-					</Grid>
-				</Grid>
+					</Box>
+					<Button
+						variant='contained'
+						sx={{
+							height: 'fit-content',
+							width: 'fit-content',
+							fontSize: `${theme.typography.caption.fontSize} !important`,
+							fontFamily: theme.typography.body1.fontFamily,
+						}}
+					>
+						<Box
+							component='span'
+							sx={{
+								display: 'none',
+								[theme.breakpoints.up('xl')]: {
+									display: 'block',
+								},
+								mr: 1,
+							}}
+						>
+							Sign Up /
+						</Box>
+						Login
+					</Button>
+				</Box>
 				<Container
-					maxWidth='lg'
 					sx={{
-						display: { xs: 'flex', lg: 'none' },
+						display: 'none',
 						justifyContent: 'space-between',
+						[theme.breakpoints.down('lg')]: {
+							display: 'flex',
+						},
 					}}
 				>
 					<Link to='/'>
@@ -239,7 +253,10 @@ export default function Header(props: { children: JSX.Element }) {
 					</Link>
 					<IconButton
 						size='large'
-						onClick={handleToggleNav}
+						onClick={() => {
+							console.log('click')
+							handleToggleNav()
+						}}
 						color='inherit'
 					>
 						<MenuIcon />
@@ -254,18 +271,37 @@ export default function Header(props: { children: JSX.Element }) {
 							})
 						}
 						sx={{
-							display: { xs: 'flex', lg: 'none' },
+							display: 'flex',
+							[theme.breakpoints.up('lg')]: {
+								display: 'none',
+							},
 						}}
 					>
 						<Box
-							my={15}
-							minWidth='30em'
+							display='flex'
+							justifyContent='flex-end'
+							sx={{ px: 2, py: 4 }}
+						>
+							<IconButton
+								size='large'
+								onClick={handleToggleNav}
+								color='inherit'
+							>
+								<Close />
+							</IconButton>
+						</Box>
+						<Box
+							width='100vw'
+							maxWidth='400px'
 							display='flex'
 							flexDirection='column'
 						>
 							{pages.map((page, i) => (
 								<Fragment key={i}>
-									<Link to={page.path}>
+									<Link
+										to={page.path}
+										onClick={handleToggleNav}
+									>
 										<Button color='inherit'>
 											<Typography variant='h6'>
 												{page.name}
@@ -276,27 +312,150 @@ export default function Header(props: { children: JSX.Element }) {
 								</Fragment>
 							))}
 						</Box>
+
+						<Link
+							to='/'
+							onClick={handleToggleNav}
+						>
+							<Button variant='text'>Login / Sign Up</Button>
+						</Link>
+						<Divider />
 					</StyledDrawer>
 				</Container>
 			</AppBar>
-			<Paper
-				square
+			<Box
 				sx={{
-					minHeight: `calc(100vh - ${state.footerHeight}px)`,
-					backgroundImage: `url(${background})`,
-					backgroundSize: 'cover',
-					backgroundPosition: 'center top',
+					minHeight: `calc(100vh - ${state.headerHeight}px)`,
+					background: theme.palette.background.default,
+					fontFamily: 'Poppins',
+					display: 'flex',
+					flexDirection: 'column',
 				}}
 			>
 				<Box
 					minHeight={`calc(100vh - calc(${state.headerHeight}em))`}
 					display='flex'
 					flexDirection='column'
+					sx={{
+						flexGrow: 1,
+						position: 'relative',
+						overflow: 'hidden',
+					}}
 				>
-					{props.children}
+					<Splats
+						sx={{
+							position: 'absolute',
+							left: '0',
+							top: 0,
+							transform: 'translate(0, 0)',
+							width: '100%',
+							height: '100%',
+							zIndex: 0,
+						}}
+					/>
+					<Box
+						zIndex={1}
+						maxWidth={'997px'}
+						width={'95%'}
+						alignSelf={'center'}
+						// Pad top if not on home page
+						pt={location.pathname === '/' ? 0 : 10}
+					>
+						{props.children}
+					</Box>
 				</Box>
 				<Footer />
-			</Paper>
-		</>
+			</Box>
+		</Box>
+	)
+}
+
+function Splats(props: { sx: SxProps }) {
+	const location = useLocation()
+	const [splats, setSplats] = useState<
+		{
+			flipped: boolean
+		}[]
+	>([])
+	const seed = 5123
+	function seededRandom(seed: number) {
+		let x = Math.sin(seed++) * 10000
+		return x - Math.floor(x)
+	}
+
+	const h = 800
+
+	useEffect(() => {
+		function createSplats() {
+			// Height of entire page
+			const windowHeight = document.body.scrollHeight
+			const splatCountY = Math.ceil(windowHeight / 400)
+			let newSplats = []
+			for (let i = 0; i < splatCountY; i++) {
+				newSplats.push({
+					flipped: seededRandom(seed) > 0.5,
+				})
+			}
+			setSplats(newSplats)
+		}
+
+		window.addEventListener('resize', createSplats)
+		createSplats()
+		return () => window.removeEventListener('resize', createSplats)
+	}, [location])
+	return (
+		<Box
+			sx={{
+				...props.sx,
+				mixBlendMode: 'soft-light',
+			}}
+		>
+			<Box
+				sx={{
+					display: 'grid',
+					flexDirection: 'column',
+					alignItems: 'flex-start',
+				}}
+			>
+				{splats.map((_, i) => (
+					<Box
+						key={i}
+						justifySelf={i % 2 !== 0 ? 'flex-start' : 'flex-end'}
+						position='relative'
+						width={'100%'}
+						// Grow the splat to the full width of the screen
+						sx={{
+							height: `${h}px`,
+						}}
+					>
+						<Box
+							sx={{
+								position: 'absolute',
+								left: `${i % 2 === 0 ? 0 : 95}%`,
+								transform: 'translate(-50%, 0%)',
+								height: `${h}px`,
+							}}
+						>
+							<Box
+								component='img'
+								src={Splat}
+								sx={{
+									height: `${h}px`,
+									width: 'auto',
+									transform: `rotate(${
+										220 +
+										(seededRandom(i + seed) > 0.5
+											? -1
+											: 1) *
+											seededRandom(seed + i) *
+											20
+									}deg)`,
+								}}
+							/>
+						</Box>
+					</Box>
+				))}
+			</Box>
+		</Box>
 	)
 }
