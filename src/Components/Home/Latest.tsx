@@ -1,38 +1,10 @@
-import { ArrowForward, Search } from '@mui/icons-material'
-import * as API from '@/utils/API'
-import { Box, Typography, SxProps, useTheme, Grid, Card, TextField, Button, styled, OutlinedInputProps, TextFieldProps, IconButton, Grid2 } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSprayCan, faGhost, faPenNib, faEgg, faCamera } from '@fortawesome/free-solid-svg-icons'
-
-import { PjktIcons } from '@/views/Public/Blogs/BlogPosts'
-
+import { Search } from '@mui/icons-material'
+import { Box, Typography, useTheme, TextField, Button, styled, TextFieldProps, IconButton, Grid2 } from '@mui/material'
 import GerzyJames from '@/assets/photos/Home/Gerzy_and_Jamez.png'
 import { BoxProps } from '.'
 
 export default function Latest(props?: BoxProps) {
-	const [announcements, setAnnouncements] = useState<API.Blog[] | null>(null)
-
-	const theme = useTheme()
-
-	const formatter = new Intl.DateTimeFormat('en', {
-		month: 'numeric',
-		day: 'numeric',
-		year: 'numeric',
-	})
-
-	// Fetch latest announcement
-	async function FetchLatest() {
-		return API.getBlogs({ limit: 5 }) as Promise<API.BlogsResponse>
-	}
-
-	useEffect(() => {
-		if (!announcements)
-			FetchLatest().then((data) => {
-				setAnnouncements(data.blogs)
-			})
-	}, [announcements])
+const theme = useTheme()
 
 	return (
 		<Box {...props}>
@@ -48,118 +20,42 @@ export default function Latest(props?: BoxProps) {
 						flexDirection: 'column',
 					}}
 				>
-					<Typography
-						variant='h2'
-						textAlign='center'
-						sx={{
-							textDecoration: 'underline',
-						}}
-					>
-						LATEST BLOG POSTS
-					</Typography>
-					<Box
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							gap: 2,
-						}}
-					>
-						{announcements &&
-							announcements.length > 0 &&
-							announcements.map((announcement) => {
-								return (
-									<Link
-										to={`/blog/${announcement.id}`}
-										key={announcement.id}
-									>
-										<Button
-											key={announcement.id}
-											fullWidth
-											sx={{
-												m: 0,
-												p: 0,
-												borderRadius: '16px !important',
-												backgroundColor: theme.palette.accentDark.main,
-												'&:hover': {
-													backgroundColor: announcement.ProjectTag?.color,
-													WebkitTextFillColor: theme.palette.getContrastText(announcement.ProjectTag?.color || theme.palette.accentDark.main),
-												},
-											}}
-										>
-											<Card
-												key={announcement.id}
-												sx={{
-													width: '100%',
-													display: 'flex',
-													borderRadius: 4,
-													backgroundColor: 'transparent',
-												}}
-											>
-												<Box
-													sx={{
-														flexGrow: 1,
-														width: '80px',
-														display: 'flex',
-														justifyContent: 'center',
-														alignItems: 'center',
-														backgroundColor: announcement.ProjectTag?.color,
-														color: theme.palette.getContrastText(announcement.ProjectTag?.color || theme.palette.accentDark.main),
-													}}
-												>
-													<FontAwesomeIcon
-														icon={(announcement.ProjectTag && PjktIcons[announcement.ProjectTag.name]) || PjktIcons.Other}
-														size='2x'
-													/>
-												</Box>
-												<Box
-													px={2}
-													width='100%'
-													display='flex'
-													flexDirection='column'
-													justifyContent='space-evenly'
-													alignItems='left'
-													gap={1}
-												>
-													<Typography
-														variant='body1'
-														sx={{
-															maxWidth: '100%',
-															width: 'fit-content',
-															textAlign: 'left',
-														}}
-													>
-														{formatter.format(new Date(announcement.createdAt))}
-													</Typography>
-													<Box
-														width='100%'
-														height='100%'
-													>
-														<Typography
-															textAlign='left'
-															variant='h5'
-															sx={{
-																textDecoration: 'underline',
-															}}
-														>
-															{announcement.title}
-														</Typography>
-													</Box>
-												</Box>
-
-												<Box
-													width='fit-content'
-													height='100%'
-													display='flex'
-													alignItems='center'
-												>
-													<ArrowForward />
-												</Box>
-											</Card>
-										</Button>
-									</Link>
-								)
-							})}
-					</Box>
+<Typography
+variant='h2'
+textAlign='center'
+sx={{
+textDecoration: 'underline',
+}}
+>
+COMING SOON
+</Typography>
+<Box
+sx={{
+display: 'flex',
+flexDirection: 'column',
+gap: 2,
+justifyContent: 'center',
+alignItems: 'center',
+height: '200px',
+backgroundColor: theme.palette.accentDark.main,
+borderRadius: 2,
+}}
+>
+<Typography
+variant='h4'
+color={theme.palette.accentDark.contrastText}
+textAlign='center'
+>
+Blog Feature
+</Typography>
+<Typography
+variant='body1'
+color={theme.palette.accentDark.contrastText}
+textAlign='center'
+>
+This section is currently under development
+</Typography>
+</Box>
 				</Grid2>
 				<Grid2
 					size={{ xs: 12, md: 6 }}
@@ -227,66 +123,7 @@ export default function Latest(props?: BoxProps) {
 							MERCH
 						</Typography>
 					</Box>
-					<Box
-						sx={{
-							width: '100%',
-							height: 'fit-contents',
-						}}
-					>
-						<Typography
-							variant='h2'
-							fontWeight='bold'
-							textAlign='center'
-							sx={{
-								textDecoration: 'underline',
-							}}
-						>
-							GROUP SEARCH
-						</Typography>
-						<Box
-							display='flex'
-							flexDirection='column'
-							justifyContent='center'
-							alignItems='center'
-							px={16}
-							py={8}
-							gap={6}
-							sx={{
-								backgroundColor: theme.palette.accentDark.main,
-								color: theme.palette.accentDark.contrastText,
-								borderRadius: 5,
-							}}
-						>
-							<CustomTextField
-								variant='outlined'
-								sx={{
-									borderRadius: 5,
-									width: '100%',
-								}}
-								// Search Icon End
-								InputProps={{
-									endAdornment: (
-										<IconButton>
-											<Search
-												sx={{
-													color: theme.palette.accentDark.contrastText,
-												}}
-											/>
-										</IconButton>
-									),
-								}}
-							/>
-							<Button variant='contained'>
-								<Typography
-									variant='body1'
-									fontWeight='bold'
-									color={theme.palette.primary.contrastText}
-								>
-									Search Group
-								</Typography>
-							</Button>
-						</Box>
-					</Box>
+{/* Group search removed */}
 				</Grid2>
 			</Grid2>
 		</Box>

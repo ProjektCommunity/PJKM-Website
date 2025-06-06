@@ -120,59 +120,11 @@ export const Footer = () => {
 							support@projektcommunity.com
 						</Typography>
 					</Link>
-				</Box>
-			</Grid2>
-			<Grid2
-				size={{ xl: 3, md: 6, xs: 12 }}
-				sx={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'center',
-				}}
-			>
-				<Box>
-					<Typography
-						variant='h6'
-						sx={{ textDecoration: 'underline' }}
-					>
-						Quick Links
-					</Typography>
-					{[
-						{ name: 'Events', path: '/events' },
-						{ name: 'Groups', path: '/groups' },
-						{ name: 'Blog', path: '/blog' },
-						{ name: 'Shop', path: '/shop' },
-						{ name: 'About', path: '/about' },
-						{ name: 'Contact / FAQ', path: '/contact' },
-					].map((page, i) => (
-						<Link
-							to={page.path}
-							key={i}
-						>
-							<Typography
-								variant='body1'
-								sx={{
-									width: 'fit-content',
-									textDecoration: 'underline',
-									cursor: 'pointer',
-									'&:hover': {
-										color: theme.palette.tertiary.main,
-										textDecoration: 'underline',
-										WebkitTextFillColor:
-											theme.palette.tertiary.main,
-									},
-								}}
-							>
-								{page.name}
-							</Typography>
-						</Link>
-					))}
-				</Box>
-			</Grid2>
-			<Grid2
-				size={{ xl: 3, md: 6, xs: 12 }}
-				sx={{
+</Box>
+</Grid2>
+<Grid2
+size={{ xl: 3, md: 6, xs: 12 }}
+sx={{
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-between',

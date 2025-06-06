@@ -27,13 +27,14 @@ export default function UpcomingEvents(props?: {} & { sx: SxProps }) {
 
 	const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' })
 
-	useEffect(() => {
-		const getEvents = async () => {
-			const projectList = new EventList(await API.getProjects())
-			setProjects(projectList)
-		}
-		if (projects.list.length === 0) getEvents()
-	}, [projects])
+useEffect(() => {
+const getEvents = async () => {
+const upcomingProjects = await API.getUpcomingProjects()
+const projectList = new EventList(upcomingProjects)
+setProjects(projectList)
+}
+if (projects.list.length === 0) getEvents()
+}, [projects])
 	return (
 		<Box sx={{ ...props?.sx }}>
 			<Box
@@ -242,16 +243,16 @@ export default function UpcomingEvents(props?: {} & { sx: SxProps }) {
 												</Box>
 											</Grid2>
 											<Grid2 size={{ xs: 12, sm: 3 }}>
-												<Box
-													component='img'
-													src={Logo?.path}
-													alt={Logo?.name}
-													width='100%'
-													height='150px'
-													sx={{
-														objectFit: 'contain',
-													}}
-												/>
+<Box
+component='img'
+src={Logo?.url || Logo?.path}
+alt={Logo?.name}
+width='100%'
+height='150px'
+sx={{
+objectFit: 'contain',
+}}
+/>
 											</Grid2>
 										</Grid2>
 									</Box>
@@ -260,20 +261,20 @@ export default function UpcomingEvents(props?: {} & { sx: SxProps }) {
 										color={ProjectTag?.color}
 									/>
 
-									<Box
-										position='absolute'
-										top={0}
-										left={0}
-										height='100%'
-										width='100%'
-										component='img'
-										src={Poster?.path}
-										sx={{
-											objectFit: 'cover',
-											filter: 'blur(10px)',
-											opacity: 0.25,
-										}}
-									/>
+<Box
+position='absolute'
+top={0}
+left={0}
+height='100%'
+width='100%'
+component='img'
+src={Poster?.url || Poster?.path}
+sx={{
+objectFit: 'cover',
+filter: 'blur(10px)',
+opacity: 0.25,
+}}
+/>
 								</Box>
 							</Button>
 						</Link>
