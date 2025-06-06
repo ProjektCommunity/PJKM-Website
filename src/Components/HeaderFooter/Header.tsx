@@ -89,35 +89,23 @@ export default function Header(props: { children: JSX.Element }) {
 	const handleToggleNav = () => {
 		dispatch({ type: REDUCER_ACTION_TYPE.ToggleNav })
 	}
-	const pages: { path: string; name: string }[] = [
-		{
-			path: '/events',
-			name: 'Events',
-		},
-		{
-			path: '/groups',
-			name: 'Groups',
-		},
-		{
-			path: '/blog',
-			name: 'Blog',
-		},
-		{
-			path: '/shop',
-			name: 'Shop',
-		},
-		{
-			path: '/about-us',
-			name: 'About',
-		},
-		{
-			path: '/contact',
-			name: 'Contact/FAQ',
-		},
-	]
-	const theme = useTheme()
+const pages: { path: string; name: string }[] = [
+{
+path: '/events',
+name: 'Events',
+},
+{
+path: '/faq',
+name: 'FAQ',
+},
+{
+path: '/contact',
+name: 'Contact Us',
+},
+]
+const theme = useTheme()
 
-	const checkPaddingWidth = () => {
+const checkPaddingWidth = () => {
 		if (window.innerWidth > 1440) {
 			setPaddingWidth((window.innerWidth - 1000) / 8)
 		} else {
@@ -210,32 +198,32 @@ export default function Header(props: { children: JSX.Element }) {
 								{page.name}
 							</Typography>
 						))}
-					</Box>
-					<Button
-						variant='contained'
-						sx={{
-							height: 'fit-content',
-							width: 'fit-content',
-							fontSize: `${theme.typography.caption.fontSize} !important`,
-							fontFamily: theme.typography.body1.fontFamily,
-						}}
-					>
-						<Box
-							component='span'
-							sx={{
-								display: 'none',
-								[theme.breakpoints.up('xl')]: {
-									display: 'block',
-								},
-								mr: 1,
-							}}
-						>
-							Sign Up /
-						</Box>
-						Login
-					</Button>
-				</Box>
-				<Container
+</Box>
+{/* <Button
+variant='contained'
+sx={{
+height: 'fit-content',
+width: 'fit-content',
+fontSize: `${theme.typography.caption.fontSize} !important`,
+fontFamily: theme.typography.body1.fontFamily,
+}}
+>
+<Box
+component='span'
+sx={{
+display: 'none',
+[theme.breakpoints.up('xl')]: {
+display: 'block',
+},
+mr: 1,
+}}
+>
+Sign Up /
+</Box>
+Login
+</Button> */}
+</Box>
+<Container
 					sx={{
 						display: 'none',
 						justifyContent: 'space-between',
@@ -309,19 +297,19 @@ export default function Header(props: { children: JSX.Element }) {
 										</Button>
 									</Link>
 									<Divider sx={{ mb: 3 }} />
-								</Fragment>
-							))}
-						</Box>
+</Fragment>
+))}
+</Box>
 
-						<Link
-							to='/'
-							onClick={handleToggleNav}
-						>
-							<Button variant='text'>Login / Sign Up</Button>
-						</Link>
-						<Divider />
-					</StyledDrawer>
-				</Container>
+{/* <Link
+to='/'
+onClick={handleToggleNav}
+>
+<Button variant='text'>Login / Sign Up</Button>
+</Link>
+<Divider /> */}
+</StyledDrawer>
+</Container>
 			</AppBar>
 			<Box
 				sx={{
@@ -380,22 +368,22 @@ function Splats(props: { sx: SxProps }) {
 			flipped: boolean
 		}[]
 	>([])
-	const seed = 5123
-	function seededRandom(seed: number) {
-		let x = Math.sin(seed++) * 10000
-		return x - Math.floor(x)
-	}
+const seed = 5123
+function seededRandom(seed: number) {
+const x = Math.sin(seed++) * 10000
+return x - Math.floor(x)
+}
 
 	const h = 800
 
 	useEffect(() => {
 		function createSplats() {
-			// Height of entire page
-			const windowHeight = document.body.scrollHeight
-			const splatCountY = Math.ceil(windowHeight / 400)
-			let newSplats = []
-			for (let i = 0; i < splatCountY; i++) {
-				newSplats.push({
+// Height of entire page
+const windowHeight = document.body.scrollHeight
+const splatCountY = Math.ceil(windowHeight / 400)
+const newSplats = []
+for (let i = 0; i < splatCountY; i++) {
+newSplats.push({
 					flipped: seededRandom(seed) > 0.5,
 				})
 			}

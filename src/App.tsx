@@ -4,7 +4,8 @@ import theme from 'services/theme/theme'
 import './App.css'
 import { useEffect, useState } from 'react'
 import { Page } from './Components'
-import { Home, UpcomingEvents, PastEvents, BlogPost, BlogPosts } from './views'
+import { Home, UpcomingEvents, PastEvents, StaffPage, GroupsList, GroupDetail, FAQPage } from './views' // Updated import for StaffPage
+import Contact from './views/Public/Contact'
 
 function App() {
 	const [init, setInit] = useState(false)
@@ -35,25 +36,37 @@ function App() {
 					path: '/events/past',
 					element: Page(PastEvents),
 				},
-				{
-					path: '/events/:id',
-					element: Page(UpcomingEvents),
-				},
-				{
-					path: '/blog',
-					element: Page(BlogPosts),
-				},
-				{
-					path: '/blog/:id',
-					element: Page(BlogPost),
-				},
-			],
-		},
-		{
-			path: '*',
-			element: redirect,
-		},
-	])
+{
+path: '/events/:id',
+element: Page(UpcomingEvents),
+},
+{
+path: '/staff', // Add route for StaffPage
+element: Page(StaffPage),
+},
+{
+path: '/groups',
+element: Page(GroupsList)
+},
+{
+path: '/groups/:id',
+element: Page(GroupDetail)
+},
+{
+path: '/contact',
+element: Page(Contact)
+},
+{
+path: '/faq',
+element: <FAQPage />
+}
+],
+},
+{
+path: '*',
+element: redirect,
+},
+])
 
 	return (
 		<ThemeProvider theme={theme}>

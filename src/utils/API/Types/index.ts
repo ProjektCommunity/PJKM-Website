@@ -1,19 +1,3 @@
-export interface event {
-	event: string
-	startDate: Date
-	endDate: Date
-	Description?: string
-	image?: string
-	community?: string
-	venue?: {
-		name: string
-		link: string
-	}
-	eventType?: string
-	streamed?: boolean
-	streamLink?: string
-	quest?: boolean
-}
 
 export interface Project {
 	id: number
@@ -44,9 +28,10 @@ export interface Project {
 }
 
 export interface File {
-	id: number
-	name?: string
-	path?: string
+id: number
+name?: string
+path?: string
+url?: string
 }
 
 export interface Tag {
@@ -67,52 +52,84 @@ export interface Venue {
 	community_id: number
 }
 
-export interface BlogsResponse {
-	blogs: Blog[]
-	meta: {
-		total: number // Total blogs
-		pages: number // Total pages
-		current: number // Current page
-	}
+// Event related types
+export interface Event {
+  id: number
+  name: string
+  start_date: string
+  end_date: string
+  marketing?: string
+  stream_link?: string
+  quest: boolean
+  instance_url?: string
+  event_public: boolean
+  event_ready: boolean
+  createdAt: string
+  updatedAt: string
+  deletedAt?: string
+  
+  project_id?: number
+  Project?: Project
+  community_id?: number
+  Community?: Community
+  venue_id?: number
+  Venue?: Venue
+  event_type_id?: number
+  EventType?: EventType
+  poster_id?: number
+  Poster?: File
+  EventCredits?: EventCredit[]
 }
 
-export interface BlogResponse {
-	blog: Blog
-	meta: {
-		hasPrevious: boolean
-		hasNext: boolean
-	}
+export interface EventType {
+  id: number
+  name: string
+  createdAt: string
+  updatedAt: string
 }
 
-export interface Blog {
-	id: number
-	title: string
-	content: string
-	createdAt: string
-	updatedAt: string
-	Author: {
-		User: {
-			username: string
-		}
-	}
-	Image: {
-		path: string
-	} | null
-	ProjectTag: {
-		id: number
-		name: string
-		color: string
-	} | null
-	Categories:
-		| {
-				name: string
-		  }[]
-		| null
+export interface EventCredit {
+  id: number
+  role_in_event: string
+  community_member_id: number
+  CommunityMember?: CommunityMember
 }
 
-export interface Category {
-	id: number
-	name: string
-	createdAt: string
-	updatedAt: string
+export interface Community {
+  id: number
+  name: string
+  description?: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CommunityMember {
+  id: number
+  username: string
+  display_name?: string
+}
+
+// Events API response types
+export interface EventsResponse {
+  events?: Event[]
+  data?: Event[]
+}
+
+export interface EventResponse {
+  event?: Event
+  data?: Event
+}
+
+// Event query parameters
+export interface EventsQueryParams {
+  projectId?: number
+  communityId?: number
+  venueId?: number
+  eventTypeId?: number
+  startDateBefore?: string
+  startDateAfter?: string
+  publicOnly?: boolean
+  readyOnly?: boolean
+  limit?: number
+  offset?: number
 }

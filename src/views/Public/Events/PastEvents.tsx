@@ -12,13 +12,14 @@ export default function UpcomingEvents(props?: {} & { sx: SxProps }) {
 	const theme = useTheme()
 	const [projects, setProjects] = useState<EventList>(new EventList([]))
 
-	useEffect(() => {
-		const getEvents = async () => {
-			const projectList = new EventList(await API.getProjects())
-			setProjects(projectList)
-		}
-		if (projects.list.length === 0) getEvents()
-	}, [projects])
+useEffect(() => {
+const getEvents = async () => {
+const pastProjects = await API.getPastProjects()
+const projectList = new EventList(pastProjects)
+setProjects(projectList)
+}
+if (projects.list.length === 0) getEvents()
+}, [projects])
 	return (
 		<Box
 			flexGrow={1}
@@ -264,13 +265,13 @@ function YearRow(props: { year: number; projects: API.Project[] }) {
 												left={0}
 												width='100%'
 												height='168px'
-												sx={{
-													backgroundImage: `url(${project.Logo?.path})`,
-													backgroundSize: 'contain',
-													backgroundRepeat: 'no-repeat',
-													backgroundPosition: 'center',
-													zIndex: 0,
-												}}
+sx={{
+backgroundImage: `url(${project.Logo?.url || project.Logo?.path})`,
+backgroundSize: 'contain',
+backgroundRepeat: 'no-repeat',
+backgroundPosition: 'center',
+zIndex: 0,
+}}
 											/>
 											<Box
 												sx={{

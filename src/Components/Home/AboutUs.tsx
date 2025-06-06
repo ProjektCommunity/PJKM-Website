@@ -1,10 +1,10 @@
-import { Box, Typography, Grid2, Grid2Props } from '@mui/material'
+import { Box, Typography, Grid2 } from '@mui/material'
 import GroupPic from '@/assets/photos/Home/Group.png'
 import { BoxProps } from '.'
 
-export default (props?: BoxProps | Grid2Props) => {
-	return (
-		<Grid2
+export default (props?: BoxProps) => {
+  return (
+    <Grid2
 			{...props as Grid2Props}
 			container
 			flexDirection='row-reverse'
