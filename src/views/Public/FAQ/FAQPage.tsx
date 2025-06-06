@@ -6,7 +6,7 @@ import Page from '../../../Components/Page';
 const faqData = [
   {
     question: 'What is Projekt Community?',
-    answer: 'Projekt Community is a vibrant community focused on VRChat communities and content creators. We aim to bring people together and create amazing experiences.',
+    answer: 'Projekt Community is a vibrant community focused on VRChat communities and content creators. We aim to bring people together and discover cool communities along the way.',
   },
   {
     question: 'How can I join Projekt Community?',
@@ -14,11 +14,11 @@ const faqData = [
   },
   {
     question: 'What kind of events do you host?',
-    answer: 'We host a variety of events, including game nights, workshops, social gatherings, contests.',
+    answer: 'We host a variety of events, including game nights, workshops, social gatherings, contests. With our huge Festival each year, we aim to bring the community together for a long ride.',
   },
   {
     question: 'How can I support Projekt Community?',
-    answer: 'There are many ways to support us! You can participate in our events, spread the word, or support us through [mention Ko-fi, Patreon, etc. if applicable]. We appreciate all forms of support!',
+    answer: 'There are many ways to support us! You can participate in our events, spread the word, or support us through Kofi: https://ko-fi.com/pjkt. We appreciate all forms of support! Oh, almost forgot, you can also get some merch!',
   },
   {
     question: 'Who can I contact for business inquiries?',
